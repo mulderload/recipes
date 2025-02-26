@@ -31,6 +31,7 @@ jobs:
         CERTIFICATE_PASSWORD: ${{ secrets.CERTIFICATE_PASSWORD }}
         ENABLE_CODE_SIGNING: ${{ secrets.ENABLE_CODE_SIGNING }}
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        RELEASE_NAME_SALT: ${{ secrets.RELEASE_NAME_SALT }}
         URL_MEDIAFIRE_TEST: ${{ secrets.URL_MEDIAFIRE_TEST }}
 
     - name: Update cache
