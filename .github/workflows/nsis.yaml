@@ -31,3 +31,11 @@ jobs:
         CERTIFICATE_BASE64: ${{ secrets.CERTIFICATE_BASE64 }}
         CERTIFICATE_PASSWORD: ${{ secrets.CERTIFICATE_PASSWORD }}
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Update cache
+      uses: EndBug/add-and-commit@v9
+      with:
+        add: 'build/.cache/'
+        author_name: 'github-actions[bot]'
+        author_email: 'github-actions[bot]@users.noreply.github.com'
+        message: 'Update cache'
