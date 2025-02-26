@@ -27,9 +27,9 @@ jobs:
       shell: pwsh
       run: ./build-all.ps1
       env:
-        ENABLE_CODE_SIGNING: "false"
         CERTIFICATE_BASE64: ${{ secrets.CERTIFICATE_BASE64 }}
         CERTIFICATE_PASSWORD: ${{ secrets.CERTIFICATE_PASSWORD }}
+        ENABLE_CODE_SIGNING: ${{ secrets.ENABLE_CODE_SIGNING }}
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         URL_MEDIAFIRE_TEST: ${{ secrets.URL_MEDIAFIRE_TEST }}
 
