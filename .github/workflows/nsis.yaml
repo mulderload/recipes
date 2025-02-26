@@ -31,6 +31,7 @@ jobs:
         CERTIFICATE_BASE64: ${{ secrets.CERTIFICATE_BASE64 }}
         CERTIFICATE_PASSWORD: ${{ secrets.CERTIFICATE_PASSWORD }}
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        URL_MEDIAFIRE_TEST: ${{ secrets.URL_MEDIAFIRE_TEST }}
 
     - name: Update cache
       uses: EndBug/add-and-commit@v9
