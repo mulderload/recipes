@@ -1,6 +1,11 @@
 . $PSScriptRoot/functions/Cache.ps1
+. $PSScriptRoot/functions/CodeSigning.ps1
 . $PSScriptRoot/functions/GithubRelease.ps1
 . $PSScriptRoot/functions/Nsis.ps1
+
+if ($Env:ENABLE_CODE_SIGNING -eq "true") {
+    CodeSigning.InstallCertificate
+}
 
 Get-ChildItem -Path '../games/abandonwares','../games/fangames','../games/patches' -Filter "*.nsi" | ForEach-Object {
     $nsiPath = $_.FullName | Resolve-Path -Relative
@@ -15,6 +20,9 @@ Get-ChildItem -Path '../games/abandonwares','../games/fangames','../games/patche
 
         # Nsis Installer
         $exePath = Nsis.MakeInstaller -nsiPath $nsiPath
+        if ($Env:ENABLE_CODE_SIGNING -eq "true") {
+            CodeSigning.SignExecutable -exePath $exePath
+        }
 
         # Github Release
         $releaseName = GithubRelease.GenerateName -nsiPath $nsiPath
