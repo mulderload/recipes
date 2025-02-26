@@ -1,0 +1,33 @@
+name: nsis
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install NSIS
+      run: .\build\binaries\nsis\nsis-3.10-setup.exe /S /ALLUSERS=1 /LANG=ENGLISH
+
+    - name: Extract NSIS Plugins
+      run: |
+        7z x -o"C:\Program Files (x86)\NSIS" "build\binaries\nsis-plugins\Inetc.zip"
+        7z x -o"C:\Program Files (x86)\NSIS" "build\binaries\nsis-plugins\Nsis7z_19.00.7z"
+
+    - name: Build All
+      working-directory: ./build
+      shell: pwsh
+      run: ./build-all.ps1
+      env:
+        ENABLE_CODE_SIGNING: "false"
+        CERTIFICATE_BASE64: ${{ secrets.CERTIFICATE_BASE64 }}
+        CERTIFICATE_PASSWORD: ${{ secrets.CERTIFICATE_PASSWORD }}
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
