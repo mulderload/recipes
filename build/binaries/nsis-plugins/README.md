@@ -1,0 +1,4 @@
+# NSIS Plugins
+
+* https://nsis.sourceforge.io/mediawiki/images/c/c9/Inetc.zip
+* https://nsis.sourceforge.io/mediawiki/images/6/69/Nsis7z_19.00.7z

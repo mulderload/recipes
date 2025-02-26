@@ -1,0 +1,2 @@
+**/*.exe
+!build/binaries/**/*.exe
