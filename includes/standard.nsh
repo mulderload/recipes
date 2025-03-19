@@ -1,5 +1,6 @@
 ; UI
 !include MUI2.nsh
+!define MUI_ICON "..\..\includes\icon.ico"
 
 ; My Macros
 !include "..\..\includes\macros\download.nsh"

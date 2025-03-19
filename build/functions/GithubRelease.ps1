@@ -15,7 +15,7 @@ function GithubRelease.RenameInstaller {
         [string]$releaseName
     )
   
-    $newName = "setup-" + $releaseName + ".exe"
+    $newName = "MulderLoad-" + $releaseName + ".exe"
     Rename-Item -Path $exePath -NewName $newName
     $exePath = $exePath.Replace([System.IO.Path]::GetFileName($exePath), $newName)
   
