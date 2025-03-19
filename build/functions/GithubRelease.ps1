@@ -6,7 +6,7 @@ function GithubRelease.GenerateName {
     $inputString = [system.Text.Encoding]::UTF8.GetBytes($nsiPath + $Env:RELEASE_NAME_SALT)
     $hasher = [System.Security.Cryptography.SHA1]::Create()
     $hash = [System.BitConverter]::ToString($hasher.ComputeHash($inputString)).Replace("-", "").ToLower()
-    return $hash.Substring(0,10)
+    return $hash.Substring(0,7)
 }
 
 function GithubRelease.RenameInstaller {
