@@ -1,7 +1,7 @@
 !include "..\..\includes\standard.nsh"
 
 Name "GTA Vice City - The Next Gen Edition"
-InstallDir "C:\MulderLoad\GTA Vice City - The Next Gen Edition"
+InstallDir "C:\MulderLoad\GTA Vice City - Next Gen Edition"
 
 Section "GTA Vice City - The Next Gen Edition"
     SetOutPath $INSTDIR

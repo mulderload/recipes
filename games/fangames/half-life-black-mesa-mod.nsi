@@ -24,7 +24,7 @@ Section "Black Mesa (with 2023 fix)"
     Nsis7z::ExtractWithDetails "$INSTDIR\2023_update.7z" "Installing package %s..."
     Delete 2023_update.7z
 
-    # Add VOSTFR for french users
+    # Make english subtitles available for french users
     CopyFiles $INSTDIR\resource\closecaption_english.dat $INSTDIR\resource\closecaption_french.dat
     CopyFiles $INSTDIR\resource\closecaption_english.txt $INSTDIR\resource\closecaption_french.txt
 SectionEnd
