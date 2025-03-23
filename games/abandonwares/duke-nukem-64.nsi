@@ -3,7 +3,7 @@
 Name "Duke Nukem 64"
 InstallDir "C:\MulderLoad\Duke Nukem 64"
 
-Section "Rednukem + Duke Nukem 64 (USA)"
+Section "Duke Nukem 64 (USA ROM) + Rednukem x64 r14198"
     SetOutPath $INSTDIR
 
     !insertmacro Download https://github.com/NBlood/NBlood/releases/download/r14198/rednukem_win64_20250225-r14198.7z rednukem.7z

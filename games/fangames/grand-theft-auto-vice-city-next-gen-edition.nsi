@@ -1,9 +1,9 @@
 !include "..\..\includes\standard.nsh"
 
-Name "GTA Vice City - The Next Gen Edition"
+Name "GTA Vice City - Next Gen Edition"
 InstallDir "C:\MulderLoad\GTA Vice City - Next Gen Edition"
 
-Section "GTA Vice City - The Next Gen Edition"
+Section "GTA Vice City - Next Gen Edition v1.1"
     SetOutPath $INSTDIR
 
     !insertmacro Download https://archive.org/download/grand-theft-auto-vice-city-next-gen-edition/GTAVCNE.EN.RU.Repack/vcNE_setup.exe vcNE_setup.exe
