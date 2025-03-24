@@ -15,7 +15,7 @@ Section "DSFix v2.4 + Bonfire Input Fix + Morten242s UI v1.5.1"
     nsisunz::Unzip /noextractpath /file "d3dx9_43\d3dx9_43.dll" "Bonfire_Input_Fix.zip" ".\"
     nsisunz::Unzip /noextractpath /file "d3dx9_43\FPSFix-Plus-Readme.txt" "Bonfire_Input_Fix.zip" ".\"
     nsisunz::Unzip /noextractpath /file "d3dx9_43\FPSFix.ini" "Bonfire_Input_Fix.zip" ".\"
-    Delete Bonfire_Input_Fix.zip
+    Delete "Bonfire_Input_Fix.zip"
 
     !insertmacro Download https://www.mediafire.com/file_premium/20g9u40b5ny82gl/Morten242s_UI_for_DSfix-45-1-5-1.zip/file "Morten242s_UI.zip"
     nsisunz::Unzip "Morten242s_UI.zip" ".\"
