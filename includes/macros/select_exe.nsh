@@ -21,7 +21,7 @@ Function CUSTOM_PAGE_SELECT_FILE
 FunctionEnd
 
 Function SelectFileDialog
-  nsDialogs::SelectFileDialog open "$DIR_EXE_DEFAULT_FOLDER\$DIR_EXE_FILENAME" "$DIR_EXE_FILENAME|$DIR_EXE_FILENAME"
+  nsDialogs::SelectFileDialog open "$DIR_EXE_DEFAULT_FOLDER\" "$DIR_EXE_FILENAME|$DIR_EXE_FILENAME"
   Call GetParent
   Pop $R0
 
