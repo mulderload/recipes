@@ -1,16 +1,16 @@
 ; UI
 !include MUI2.nsh
-!define MUI_ICON "..\..\includes\icon.ico"
+!define MUI_ICON "..\..\templates\icon.ico"
 
-; My Macros
-!include "..\..\includes\macros\download.nsh"
-!include "..\..\includes\macros\select_exe.nsh"
+; My Macros / Functions
+!include "..\..\templates\includes\download.nsh"
+!include "..\..\templates\includes\abort_if_folder_not_empty.nsh"
 
 ; Customize pages
 !define MUI_COMPONENTSPAGE_NODESC
 
 ; MUI Macros
-Page Custom CUSTOM_PAGE_SELECT_FILE
+!insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_COMPONENTS
 !insertmacro MUI_PAGE_INSTFILES
 !insertmacro MUI_PAGE_FINISH

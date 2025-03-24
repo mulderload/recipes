@@ -1,8 +1,8 @@
 Var BROWSE_BUTTON
 
-Var /GLOBAL DIR_EXE_FILENAME
-Var /GLOBAL DIR_EXE_DEFAULT_FOLDER
-Var /GLOBAL DIR_EXE_RELATIVE_INSTDIR
+Var /GLOBAL SELECT_FILENAME
+Var /GLOBAL SELECT_DEFAULT_FOLDER
+Var /GLOBAL SELECT_RELATIVE_INSTDIR
 
 Function CUSTOM_PAGE_SELECT_FILE
 	nsDialogs::Create 1018
@@ -12,7 +12,7 @@ Function CUSTOM_PAGE_SELECT_FILE
     GetDlgItem $0 $HWNDPARENT 1
     EnableWindow $0 0
 
-	${NSD_CreateBrowseButton} 0 0 100% 12u "Localize $DIR_EXE_FILENAME"
+	${NSD_CreateBrowseButton} 0 0 100% 12u "Localize $SELECT_FILENAME"
 	Pop $BROWSE_BUTTON
 	GetFunctionAddress $0 SelectFileDialog
 	nsDialogs::OnClick $BROWSE_BUTTON $0
@@ -21,7 +21,7 @@ Function CUSTOM_PAGE_SELECT_FILE
 FunctionEnd
 
 Function SelectFileDialog
-  nsDialogs::SelectFileDialog open "$DIR_EXE_DEFAULT_FOLDER\" "$DIR_EXE_FILENAME|$DIR_EXE_FILENAME"
+  nsDialogs::SelectFileDialog open "$SELECT_DEFAULT_FOLDER\" "$SELECT_FILENAME|$SELECT_FILENAME"
   Call GetParent
   Pop $R0
 
@@ -31,7 +31,7 @@ Function SelectFileDialog
     EnableWindow $0 1
   ${EndIf}
 
-  StrCpy $INSTDIR "$R0\$DIR_EXE_RELATIVE_INSTDIR"
+  StrCpy $INSTDIR "$R0\$SELECT_RELATIVE_INSTDIR"
 FunctionEnd
 
 Function GetParent ; https://nsis.sourceforge.io/Get_parent_directory
