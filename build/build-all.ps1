@@ -25,9 +25,11 @@ Get-ChildItem -Path '../games/abandonwares','../games/fangames','../games/patche
         }
 
         # Github Release
-        $releaseName = GithubRelease.GenerateName -nsiPath $nsiPath
-        $exePath = GithubRelease.RenameInstaller -exePath $exePath -releaseName $releaseName
-        GithubRelease.UploadInstaller -exePath $exePath -releaseName $releaseName
+        if ($Env:ENABLE_GITHUB_RELEASE -eq "true") {
+            $releaseName = GithubRelease.GenerateName -nsiPath $nsiPath
+            $exePath = GithubRelease.RenameInstaller -exePath $exePath -releaseName $releaseName
+            GithubRelease.UploadInstaller -exePath $exePath -releaseName $releaseName
+        }
 
         # Cache
         Cache.SaveHash -nsiPath $nsiPath -hashValue $newHash
