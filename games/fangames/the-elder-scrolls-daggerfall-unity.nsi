@@ -17,9 +17,9 @@ Section "Required Original Game Files"
 
     !insertmacro Download https://archive.org/download/daggerfall-play/Daggerfall.zip "Daggerfall.zip"
     nsisunz::Unzip "Daggerfall.zip" ".\"
-    Delete Daggerfall.zip
+    Delete "Daggerfall.zip"
 
     Rename "$INSTDIR\DAGGER\ARENA2" "$INSTDIR\ARENA2"
     RMDir /r "$INSTDIR\DAGGER"
-    Delete dagger.bat
+    Delete "dagger.bat"
 SectionEnd

@@ -11,5 +11,5 @@ Section "AM2R v1.1 + AM2RLauncher v2.3"
     nsisunz::Unzip "AM2RLauncher.zip" ".\"
     Delete "AM2RLauncher.zip"
 
-    !insertmacro Download https://archive.org/download/am2r1.1/am2r-another-metroid-2-remake-1-1.zip AM2R_11.zip
+    !insertmacro Download https://archive.org/download/am2r1.1/am2r-another-metroid-2-remake-1-1.zip "AM2R_11.zip"
 SectionEnd

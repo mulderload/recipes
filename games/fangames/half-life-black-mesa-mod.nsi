@@ -27,8 +27,8 @@ Section "Black Mesa (with 2023 update)"
     Delete "2023_update.7z"
 
     # Make english subtitles available for french users
-    CopyFiles $INSTDIR\resource\closecaption_english.dat $INSTDIR\resource\closecaption_french.dat
-    CopyFiles $INSTDIR\resource\closecaption_english.txt $INSTDIR\resource\closecaption_french.txt
+    CopyFiles "$INSTDIR\resource\closecaption_english.dat" "$INSTDIR\resource\closecaption_french.dat"
+    CopyFiles "$INSTDIR\resource\closecaption_english.txt" "$INSTDIR\resource\closecaption_french.txt"
 SectionEnd
 
 Section /o "Patch FR (French Subtitles)"
