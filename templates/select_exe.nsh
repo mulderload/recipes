@@ -18,3 +18,6 @@ Page Custom CUSTOM_PAGE_SELECT_FILE
 
 ; No need to compress twice!
 SetCompress off
+
+; Run as user by default
+RequestExecutionLevel none

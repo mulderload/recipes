@@ -1,4 +1,5 @@
 !include "..\..\templates\select_exe.nsh"
+RequestExecutionLevel admin
 
 Name "Deus Ex [PATCHS]"
 

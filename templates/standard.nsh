@@ -17,3 +17,6 @@
 
 ; No need to compress twice!
 SetCompress off
+
+; Run as user by default
+RequestExecutionLevel none
