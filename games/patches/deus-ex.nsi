@@ -59,5 +59,5 @@ SectionEnd
 Function .onInit
     StrCpy $SELECT_FILENAME "DeusEx.exe"
     StrCpy $SELECT_DEFAULT_FOLDER "C:\Program Files (x86)\Steam\steamapps\common\Deus Ex\System"
-    StrCpy $SELECT_RELATIVE_INSTDIR "..\"
+    StrCpy $SELECT_RELATIVE_INSTDIR ".."
 FunctionEnd
