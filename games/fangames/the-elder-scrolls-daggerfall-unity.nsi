@@ -23,3 +23,11 @@ Section "Required Original Game Files"
     RMDir /r "$INSTDIR\DAGGER"
     Delete "dagger.bat"
 SectionEnd
+
+Section /o "Patch FR (French Texts)"
+    SetOutPath $INSTDIR\DaggerfallUnity_Data\StreamingAssets
+
+    !insertmacro Download https://www.mediafire.com/file_premium/jesqxtf9gegvvql/VF_Daggerfall_Unity_1.1.1a-456-1-1-1a-1721921977.7z/file "VF_Daggerfall_Unity.7z"
+    Nsis7z::ExtractWithDetails "VF_Daggerfall_Unity.7z" "Installing package %s..."
+    Delete "VF_Daggerfall_Unity.7z"
+SectionEnd
