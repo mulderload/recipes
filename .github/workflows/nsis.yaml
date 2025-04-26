@@ -19,7 +19,7 @@ jobs:
 
     - name: Extract NSIS Plugins
       run: |
-        7z x -o"C:\Program Files (x86)\NSIS" "build\binaries\nsis-plugins\Inetc.zip"
+        7z x -o"C:\Program Files (x86)\NSIS\Plugins" "build\binaries\nsis-plugins\Inetc.zip"
         7z x -o"C:\Program Files (x86)\NSIS" "build\binaries\nsis-plugins\Nsis7z_19.00.7z"
         7z e -o"C:\Program Files (x86)\NSIS\Plugins\x86-unicode" "build\binaries\nsis-plugins\NSISunzU.zip" "NSISunzU\Plugin unicode\*"
         7z e -o"C:\Program Files (x86)\NSIS\Plugins\x86-unicode" "build\binaries\nsis-plugins\NSIS_HashInfo_Plugin.zip" "Win32\Release\*"
