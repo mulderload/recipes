@@ -9,8 +9,10 @@
 
 ; Customize pages
 !define MUI_COMPONENTSPAGE_NODESC
+!include "..\..\templates\includes\wording.nsh"
 
 ; MUI Macros
+!insertmacro MUI_PAGE_WELCOME
 Page Custom CUSTOM_PAGE_SELECT_FILE
 !insertmacro MUI_PAGE_COMPONENTS
 !insertmacro MUI_PAGE_INSTFILES
