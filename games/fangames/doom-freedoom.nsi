@@ -1,3 +1,4 @@
+!define MUI_WELCOMEPAGE_TEXT "Welcome to this NSIS installer from the MulderLoad project.$\r$\n$\r$\nThis installer will$\r$\n- download GZDoom from Github (and extract it)$\r$\n- download FreeDM from Github (and extract the WAD)$\r$\n- download FreeDoom from Github (and extract the 2 WADs)$\r$\n- (optionally) download Doom Shareware WAD from Doomworld$\r$\n$\r$\nA big thanks to the GZDoom and Freedoom projects !"
 !include "..\..\templates\standard.nsh"
 
 Name "Freedoom"

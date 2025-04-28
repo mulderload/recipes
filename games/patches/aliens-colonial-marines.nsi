@@ -1,3 +1,4 @@
+!define MUI_WELCOMEPAGE_TEXT "Welcome to this NSIS installer from the MulderLoad project.$\r$\n$\r$\nThis installer will download and install the ACM Overhaul mod v6.2 that fixes a lot of things in this game."
 !include "..\..\templates\select_exe.nsh"
 
 Name "Aliens: Colonial Marines [PATCHS]"

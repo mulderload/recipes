@@ -1,3 +1,4 @@
+!define MUI_WELCOMEPAGE_TEXT "Welcome to this NSIS installer from the MulderLoad project.$\r$\n$\r$\nThis installer will download$\r$\n- RedNukem from official Github (and extract it)$\r$\n- USA ROM of Duke Nukem 64 from Archive.org"
 !include "..\..\templates\standard.nsh"
 
 Name "Duke Nukem 64"

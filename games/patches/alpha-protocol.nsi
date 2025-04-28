@@ -1,3 +1,4 @@
+!define MUI_WELCOMEPAGE_TEXT "Welcome to this NSIS installer from the MulderLoad project.$\r$\n$\r$\nThis installer can$\r$\n- apply the GOG 2024 Update (v1.1) in your Steam copy$\r$\n- disable the intro videos$\r$\n$\r$\nEnjoy this updated game !"
 !include "..\..\templates\select_exe.nsh"
 
 Name "Alpha Protocol [PATCHS]"

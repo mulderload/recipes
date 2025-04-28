@@ -1,3 +1,4 @@
+!define MUI_WELCOMEPAGE_TEXT "Welcome to this NSIS installer from the MulderLoad project.$\r$\n$\r$\nThis installer will download an (opinionated) compilation of patches for the game, while keeping a 'vanilla experience'.$\r$\n$\r$\nA big thanks to$\r$\n- the aliasIsolation project$\r$\n- BUR7N for his 'Enhanced Graphics' mod$\r$\n- ThirteenAG for his SkipSaveConfirmationDialog mod"
 !include "..\..\templates\select_exe.nsh"
 
 Name "Alien: Isolation [PATCHS]"

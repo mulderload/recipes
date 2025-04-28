@@ -1,3 +1,4 @@
+!define MUI_WELCOMEPAGE_TEXT "Welcome to this NSIS installer from the MulderLoad project.$\r$\n$\r$\nThis installer will download an (opinionated) compilation of patches for the game, while keeping a 'vanilla experience'.$\r$\n$\r$\nIt includes:$\r$\n- Better default resolution$\r$\n- Upscaled Textures$\r$\n- (optionally) a french patch$\r$\n$\r$\nA big thanks to the Penumbra: Quality Of Life Project for their textures !"
 !include "..\..\templates\select_exe.nsh"
 
 Name "Penumbra: Overture [PATCHS]"

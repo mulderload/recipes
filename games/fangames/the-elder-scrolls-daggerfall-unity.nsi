@@ -1,3 +1,4 @@
+!define MUI_WELCOMEPAGE_TEXT "Welcome to this NSIS installer from the MulderLoad project.$\r$\n$\r$\nThis installer will$\r$\n- download the latest version of Daggerfall Unity (v1.1.1)$\r$\n- download original game files from Archive.org$\r$\n- (optionally) download french patch"
 !include "..\..\templates\standard.nsh"
 
 Name "Daggerfall Unity"

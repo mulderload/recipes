@@ -1,3 +1,4 @@
+!define MUI_WELCOMEPAGE_TEXT "Welcome to this NSIS installer from the MulderLoad project.$\r$\n$\r$\nThis installer will download an (opinionated) compilation of patches for the game, while keeping a 'vanilla experience'.$\r$\n$\r$\nIt includes:$\r$\n- Corrupted levels Fix (with auto-detection)$\r$\n- Widescreen Fix$\r$\n- Modern CPUs Fix$\r$\n- Difficulty fixes$\r$\n- Sound fix (via DSOAL)$\r$\n$\r$\nA big thanks to ThirteenAG and the DSOAL project!"
 !include "..\..\templates\select_exe.nsh"
 
 Name "Max Payne [PATCHS]"
@@ -30,7 +31,7 @@ Section "Fix JPEG errors on modern CPUs"
     !insertmacro download https://www.mediafire.com/file_premium/vpotbzh2qt9o89c/rlmfc.dll/file "rlmfc.dll"
 SectionEnd
 
-SectionGroup "Difficulty fix"
+SectionGroup "Difficulty fixes"
     Section "Remove broken Adaptive Difficulty"
         SetOutPath $INSTDIR
 

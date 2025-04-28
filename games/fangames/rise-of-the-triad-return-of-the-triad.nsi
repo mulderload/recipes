@@ -1,3 +1,4 @@
+!define MUI_WELCOMEPAGE_TEXT "Welcome to this NSIS installer from the MulderLoad project.$\r$\n$\r$\nThis installer will$\r$\n- download GZDoom from Github$\r$\n- download Return of the Triad v1.6$\r$\n- (optionally) Download the addon Scream of the Triad$\r$\n- (optionally) if you don't have Doom 1 or Doom 2 installed on your computer, you can also download Freedoom Phase 1 which is a good substitute."
 !include "..\..\templates\standard.nsh"
 
 Name "Return of the Triad"

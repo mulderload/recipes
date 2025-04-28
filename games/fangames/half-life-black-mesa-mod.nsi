@@ -1,3 +1,4 @@
+!define MUI_WELCOMEPAGE_TEXT "Welcome to this NSIS installer from the MulderLoad project.$\r$\n$\r$\nThis installer will$\r$\n- download Black Mesa mod from Archive.org$\r$\n- download the 2023 fix (thanks to RN97 and EffBoyardee)$\r$\n- make english subtitles to work for french users$\r$\n- (optionally) download and install the official french translation$\r$\n$\r$\nYou need to have 'Source SDK Base 2007' for this mod to work, this installer will try to install it via Steam.$\r$\n$\r$\nAfter installation, you will have to quit & restart Steam for the game to appear in your library."
 !include "..\..\templates\select_exe.nsh"
 
 Name "Black Mesa (mod)"

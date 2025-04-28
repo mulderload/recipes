@@ -1,3 +1,4 @@
+!define MUI_WELCOMEPAGE_TEXT "Welcome to this NSIS installer from the MulderLoad project.$\r$\n$\r$\nThis installer will$\r$\n- download the latest version of Broken Sword 2.5 from the developer servers$\r$\n- run the setup$\r$\n- download and extract the latest language patch."
 !include "..\..\templates\standard.nsh"
 
 Name "Broken Sword 2.5: The Return of the Templars"

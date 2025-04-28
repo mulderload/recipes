@@ -1,3 +1,4 @@
+!define MUI_WELCOMEPAGE_TEXT "Welcome to this NSIS installer from the MulderLoad project.$\r$\n$\r$\nThis installer will download uncensored (USA) version of Wolfram, already updated to v1.1"
 !include "..\..\templates\standard.nsh"
 
 Name "Wolfram"

@@ -1,3 +1,4 @@
+!define MUI_WELCOMEPAGE_TEXT "Welcome to this NSIS installer from the MulderLoad project.$\r$\n$\r$\nThis installer will download an (opinionated) compilation of patches for the game, while keeping a 'vanilla experience'.$\r$\n$\r$\nIt includes:$\r$\n- Widescreen Fix$\r$\n- PS3 HD Textures$\r$\n- Bonus Missions$\r$\n$\r$\nA big thanks to ThirteenAG and the dgVoodoo project !"
 !include "..\..\templates\select_exe.nsh"
 
 Name "Tom Clancy's Splinter Cell [PATCHS]"

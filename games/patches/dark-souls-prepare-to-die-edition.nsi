@@ -1,3 +1,4 @@
+!define MUI_WELCOMEPAGE_TEXT "Welcome to this NSIS installer from the MulderLoad project.$\r$\n$\r$\nThis installer will download an (opinionated) compilation of patches for the game, while keeping a 'vanilla experience'.$\r$\n$\r$\nIt includes:$\r$\n- DSFix, to fix internal resolution, and add 60fps mod$\r$\n- Bonfire Input Fix (to fix bugs introduced by the 60fps)$\r$\n- Morten242s, an UI for DSFix$\r$\n- HD Interface (fonts, controller icons)$\r$\n- A selection of HD Textures that don't change the feeling of the game.$\r$\n$\r$\nEnjoy... and praise the sun !"
 !include "..\..\templates\select_exe.nsh"
 !include "Sections.nsh"
 
