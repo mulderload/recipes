@@ -48,3 +48,9 @@
         !insertmacro Download "${url}" "${newFile}"
     skip_download${hash}:
 !macroend
+
+!macro Get7z
+    !insertmacro Download https://raw.githubusercontent.com/mulderload/recipes/refs/heads/main/resources/7z/7z.7z "7z.7z"
+    Nsis7z::Extract "7z.7z"
+    Delete "7z.7z"
+!macroend
