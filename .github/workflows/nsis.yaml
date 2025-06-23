@@ -22,11 +22,11 @@ jobs:
       working-directory: ./build/binaries/nsis-plugins
       shell: pwsh
       run: |
-        Invoke-WebRequest -Uri https://github.com/negrutiu/nsis-nscurl/releases/download/v25.5.31.201/NScurl.zip -OutFile NSCurl.zip
+        Invoke-WebRequest -Uri https://github.com/negrutiu/nsis-nscurl/releases/download/v25.5.31.201/NScurl.zip -OutFile NScurl.zip
 
     - name: Extract all NSIS Plugins
       run: |
-        7z x -o"C:\Program Files (x86)\NSIS" "build\binaries\NScurl.zip"
+        7z x -o"C:\Program Files (x86)\NSIS" "build\binaries\nsis-plugins\NScurl.zip"
         7z x -o"C:\Program Files (x86)\NSIS" "build\binaries\nsis-plugins\Nsis7z_19.00.7z"
         7z e -o"C:\Program Files (x86)\NSIS\Plugins\x86-unicode" "build\binaries\nsis-plugins\NSISunzU.zip" "NSISunzU\Plugin unicode\*"
 
