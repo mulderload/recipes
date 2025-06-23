@@ -18,8 +18,5 @@
 !insertmacro MUI_PAGE_INSTFILES
 !insertmacro MUI_PAGE_FINISH
 
-; No need to compress twice!
-SetCompress off
-
 ; Run as user by default
 RequestExecutionLevel none
