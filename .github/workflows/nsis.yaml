@@ -21,7 +21,8 @@ jobs:
     - name: Download some NSIS Plugins
       working-directory: ./build/binaries/nsis-plugins
       shell: pwsh
-      run: wget -O NSCurl.zip https://github.com/negrutiu/nsis-nscurl/releases/download/v25.5.31.201/NScurl.zip
+      run: |
+        wget -O NSCurl.zip https://github.com/negrutiu/nsis-nscurl/releases/download/v25.5.31.201/NScurl.zip
 
     - name: Extract all NSIS Plugins
       run: |
