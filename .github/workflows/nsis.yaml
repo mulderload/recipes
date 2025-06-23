@@ -19,7 +19,7 @@ jobs:
       run: .\build\binaries\nsis\nsis-3.11-setup.exe /S /ALLUSERS=1 /LANG=ENGLISH
 
     - name: Download some NSIS Plugins
-      working-directory: ./binaries/nsis-plugins
+      working-directory: ./build/binaries/nsis-plugins
       shell: pwsh
       run: wget -O NSCurl.zip https://github.com/negrutiu/nsis-nscurl/releases/download/v25.5.31.201/NScurl.zip
 
