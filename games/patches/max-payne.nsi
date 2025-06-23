@@ -7,7 +7,7 @@ Section "Fix corrupted levels (if required)"
     SectionIn RO
     SetOutPath $INSTDIR
 
-    !insertmacro DownloadIfDifferent "x_level1.ras" "B8A1E86C" https://www.mediafire.com/file_premium/9v212c2kmot7bes/x_levels_fix.7z/file "x_levels_fix.7z"
+    !insertmacro DownloadIfDifferent "x_level1.ras" "d7dc20d91930b67c84dad0fb18a5c712bd324330" https://www.mediafire.com/file_premium/9v212c2kmot7bes/x_levels_fix.7z/file "x_levels_fix.7z"
     IfFileExists "x_levels_fix.7z" yes no
     yes: Nsis7z::ExtractWithDetails "x_levels_fix.7z" "Replacing file %s..."
         Delete "x_levels_fix.7z"

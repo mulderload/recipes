@@ -16,14 +16,19 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Install NSIS
-      run: .\build\binaries\nsis\nsis-3.10-setup.exe /S /ALLUSERS=1 /LANG=ENGLISH
+      run: .\build\binaries\nsis\nsis-3.11-setup.exe /S /ALLUSERS=1 /LANG=ENGLISH
 
-    - name: Extract NSIS Plugins
+    - name: Download some NSIS Plugins
+      working-directory: ./build/binaries/nsis-plugins
+      shell: pwsh
       run: |
-        7z x -o"C:\Program Files (x86)\NSIS" "build\binaries\nsis-plugins\Inetc.zip"
+        Invoke-WebRequest -Uri https://github.com/negrutiu/nsis-nscurl/releases/download/v25.5.31.201/NScurl.zip -OutFile NScurl.zip
+
+    - name: Extract all NSIS Plugins
+      run: |
+        7z x -o"C:\Program Files (x86)\NSIS" "build\binaries\nsis-plugins\NScurl.zip"
         7z x -o"C:\Program Files (x86)\NSIS" "build\binaries\nsis-plugins\Nsis7z_19.00.7z"
         7z e -o"C:\Program Files (x86)\NSIS\Plugins\x86-unicode" "build\binaries\nsis-plugins\NSISunzU.zip" "NSISunzU\Plugin unicode\*"
-        7z e -o"C:\Program Files (x86)\NSIS\Plugins\x86-unicode" "build\binaries\nsis-plugins\NSIS_HashInfo_Plugin.zip" "Win32\Release\*"
 
     - name: Build All
       working-directory: ./build
