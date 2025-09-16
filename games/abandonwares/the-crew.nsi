@@ -22,7 +22,7 @@ SectionGroup "The Crew Unlimited (Server Emulator) v1.0"
         SectionIn RO
         SetOutPath $INSTDIR
 
-        !insertmacro Download https://thecrewunlimited.com/TCUNet/TCULauncher/TCULauncher-1.0.0.0.7z "TCULauncher.7z"
+        !insertmacro Download https://thecrewunlimited.com/TCUNet/TCULauncher/TCULauncher-1.1.2.0.7z "TCULauncher.7z"
         Nsis7z::ExtractWithDetails "TCULauncher.7z" "Installing package %s..."
         Delete "TCULauncher.7z"
         
