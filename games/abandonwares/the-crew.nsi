@@ -10,26 +10,43 @@ Name "The Crew [FULL]"
 InstallDir "C:\MulderLoad\The Crew"
 
 Section "The Crew (Ultimate Edition, Worldwide)"
-    SetOutPath $INSTDIR
+    SetOutPath "$INSTDIR"
+    AddSize 20739405 # compressed (temporary)
+    AddSize 25544553 # decompressed
 
     !insertmacro DownloadRange https://cdn1.mulderload.eu/g/a/the-crew/the-crew-1-worldwide-build502193/the-crew-1-worldwide-build502193.7z "the-crew-1-worldwide-build502193.7z" 41
     Nsis7z::ExtractWithDetails "the-crew-1-worldwide-build502193.7z.001" "Installing package %s..."
     !insertmacro DeleteRange "the-crew-1-worldwide-build502193.7z" 41
+
+    nsExec::ExecToLog 'icacls "$INSTDIR" /grant Users:(OI)(CI)M /T'
 SectionEnd
 
-SectionGroup "The Crew Unlimited (Server Emulator) v1.0"
+SectionGroup "The Crew Unlimited (Server Emulator) v1.1.5.0"
     Section
-        SectionIn RO
         SetOutPath $INSTDIR
+        AddSize 3000 # compressed (temporary)
+        AddSize 10000 # decompressed
 
-        !insertmacro Download https://thecrewunlimited.com/TCUNet/TCULauncher/TCULauncher-1.1.2.0.7z "TCULauncher.7z"
+        !insertmacro Download https://thecrewunlimited.com/TCUNet/TCULauncher/TCULauncher-1.1.5.0.7z "TCULauncher.7z"
         Nsis7z::ExtractWithDetails "TCULauncher.7z" "Installing package %s..."
         Delete "TCULauncher.7z"
-        
+
         !insertmacro Download https://raw.githubusercontent.com/mulderload/recipes/refs/heads/main/resources/the-crew/README.txt "README-MulderLoad.txt"
+
+        nsExec::ExecToLog 'icacls "$INSTDIR" /grant Users:(OI)(CI)M /T'
     SectionEnd
 
-    Section "Whitelist in Windows Defender (recommended)"
+    Section "Microsoft .NET Desktop Runtime 8.0.20 (x64)"
+        SetOutPath $INSTDIR
+        AddSize 61000  # compressed (temporary)
+        AddSize 100000 # decompressed
+
+        !insertmacro Download https://builds.dotnet.microsoft.com/dotnet/WindowsDesktop/8.0.20/windowsdesktop-runtime-8.0.20-win-x64.exe "windowsdesktop-runtime-win-x64.exe"
+        ExecWait '"windowsdesktop-runtime-win-x64.exe" /Q' $0
+        Delete "windowsdesktop-runtime-win-x64.exe"
+    SectionEnd
+
+    Section "Whitelist game folder in Windows Defender"
         nsExec::Exec "powershell.exe -Command Add-MpPreference -ExclusionPath '$INSTDIR'"
     SectionEnd
 SectionGroupEnd
