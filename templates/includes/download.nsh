@@ -1,5 +1,5 @@
 !macro Download url file
-  NScurl::http GET ${url} ${file} /CANCEL /END
+  NScurl::http GET ${url} ${file} /INSIST /RESUME /CANCEL /END
   Pop $0 # return value = exit code, "OK" if OK
   ${If} $0 != "OK"
     MessageBox MB_ICONEXCLAMATION "$0 - ${file}"
