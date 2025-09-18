@@ -20,7 +20,7 @@ SectionGroup "The Crew Unlimited (Server Emulator) v1.1.5.0"
 
         !insertmacro Download https://raw.githubusercontent.com/mulderload/recipes/refs/heads/main/resources/the-crew/README-Steam.txt "README-MulderLoad.txt"
 
-        nsExec::ExecToLog 'icacls "$INSTDIR" /grant Users:(OI)(CI)M /T'
+        nsExec::ExecToLog /OEM 'icacls "$INSTDIR" /grant *S-1-5-32-545:(OI)(CI)M /T'
     SectionEnd
 
     Section "Microsoft .NET Desktop Runtime 8.0.20 (x64)"

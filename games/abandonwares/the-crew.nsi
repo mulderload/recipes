@@ -18,7 +18,7 @@ Section "The Crew (Ultimate Edition, Worldwide)"
     Nsis7z::ExtractWithDetails "the-crew-1-worldwide-build502193.7z.001" "Installing package %s..."
     !insertmacro DeleteRange "the-crew-1-worldwide-build502193.7z" 41
 
-    nsExec::ExecToLog 'icacls "$INSTDIR" /grant Users:(OI)(CI)M /T'
+    nsExec::ExecToLog /OEM 'icacls "$INSTDIR" /grant *S-1-5-32-545:(OI)(CI)M /T'
 SectionEnd
 
 SectionGroup "The Crew Unlimited (Server Emulator) v1.1.5.0"
@@ -33,7 +33,7 @@ SectionGroup "The Crew Unlimited (Server Emulator) v1.1.5.0"
 
         !insertmacro Download https://raw.githubusercontent.com/mulderload/recipes/refs/heads/main/resources/the-crew/README.txt "README-MulderLoad.txt"
 
-        nsExec::ExecToLog 'icacls "$INSTDIR" /grant Users:(OI)(CI)M /T'
+        nsExec::ExecToLog /OEM 'icacls "$INSTDIR" /grant *S-1-5-32-545:(OI)(CI)M /T'
     SectionEnd
 
     Section "Microsoft .NET Desktop Runtime 8.0.20 (x64)"
