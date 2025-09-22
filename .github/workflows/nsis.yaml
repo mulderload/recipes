@@ -40,6 +40,7 @@ jobs:
         ENABLE_CODE_SIGNING: ${{ vars.ENABLE_CODE_SIGNING }}
         ENABLE_GITHUB_RELEASE: ${{ vars.ENABLE_GITHUB_RELEASE }}
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        MLD_REDIRECT_API_KEY: ${{ secrets.MLD_REDIRECT_API_KEY }}
         RELEASE_NAME_SALT: ${{ secrets.RELEASE_NAME_SALT }}
 
     - name: Update cache

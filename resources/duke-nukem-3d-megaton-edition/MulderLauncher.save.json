@@ -1,0 +1,42 @@
+{
+  "Duke Nukem 3D: Atomic Edition": {
+    "Executable": "eDuke32 (better quality)",
+    "Vanilla Textures": [
+      "AI Upscaled Textures"
+    ],
+    "High Resolution Pack": "Enabled (modern monsters)",
+    "Misc": [
+      "Skip intro videos"
+    ]
+  },
+  "Duke It Out In D.C.": {
+    "Executable": "eDuke32 (better quality)",
+    "Vanilla Textures": [
+      "AI Upscaled Textures"
+    ],
+    "High Resolution Pack": "Enabled (modern monsters)",
+    "Misc": [
+      "Skip intro videos"
+    ]
+  },
+  "Duke: Nuclear Winter": {
+    "Executable": "eDuke32 (better quality)",
+    "Vanilla Textures": [
+      "AI Upscaled Textures"
+    ],
+    "High Resolution Pack": "Enabled (classic monsters)",
+    "Misc": [
+      "Skip intro videos"
+    ]
+  },
+  "Duke Caribbean: Life's A Beach": {
+    "Executable": "eDuke32 (better quality)",
+    "Vanilla Textures": [
+      "AI Upscaled Textures"
+    ],
+    "High Resolution Pack": "Enabled (classic monsters)",
+    "Misc": [
+      "Skip intro videos"
+    ]
+  }
+}

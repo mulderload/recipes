@@ -7,6 +7,15 @@
   ${EndIf}
 !macroend
 
+!macro DownloadRedirect url file
+  NScurl::http GET ${url} ${file} /HEADER "X-API-Key: $%MLD_REDIRECT_API_KEY%" /END
+  Pop $0 # return value = exit code, "OK" if OK
+  ${If} $0 != "OK"
+    MessageBox MB_ICONEXCLAMATION "$0 - ${file}"
+	Abort
+  ${EndIf}
+!macroend
+
 !macro DownloadRange url file nbParts
   StrCpy $1 1 # currentPart
   loop_dl_${file}:
