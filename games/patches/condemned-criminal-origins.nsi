@@ -60,7 +60,7 @@ SectionGroup /e "AI Upscaled Textures (Neural Origins 0.9)"
     Section # Neural Origins v0.9
         SetOutPath $INSTDIR\Game\CondemnedC.Arch00
 
-        !insertmacro DownloadRange https://cdn.steampatches.com/g/p/condemned-criminal-origins/Neural_Origins_0.9.7z "Neural_Origins_0.9.7z" 9
+        !insertmacro DownloadRange https://cdn2.mulderload.eu/g/condemned-criminal-origins/Neural_Origins_0.9/Neural_Origins_0.9.7z "Neural_Origins_0.9.7z" 9
         Nsis7z::ExtractWithDetails "Neural_Origins_0.9.7z.001" "Installing package %s..."
         !insertmacro DeleteRange "Neural_Origins_0.9.7z" 9
     SectionEnd

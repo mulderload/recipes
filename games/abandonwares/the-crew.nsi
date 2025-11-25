@@ -14,20 +14,20 @@ Section "The Crew (Ultimate Edition, Worldwide)"
     AddSize 20739405 # compressed (temporary)
     AddSize 25544553 # decompressed
 
-    !insertmacro DownloadRange https://cdn1.mulderload.eu/g/a/the-crew/the-crew-1-worldwide-build502193/the-crew-1-worldwide-build502193.7z "the-crew-1-worldwide-build502193.7z" 41
+    !insertmacro DownloadRange https://cdn2.mulderload.eu/g/the-crew/the-crew-1-worldwide-build502193/the-crew-1-worldwide-build502193.7z "the-crew-1-worldwide-build502193.7z" 41
     Nsis7z::ExtractWithDetails "the-crew-1-worldwide-build502193.7z.001" "Installing package %s..."
     !insertmacro DeleteRange "the-crew-1-worldwide-build502193.7z" 41
 
     nsExec::ExecToLog /OEM 'icacls "$INSTDIR" /grant *S-1-5-32-545:(OI)(CI)M /T'
 SectionEnd
 
-SectionGroup "The Crew Unlimited (Server Emulator) v1.1.5.0"
+SectionGroup "The Crew Unlimited (Server Emulator) v1.2.0.1"
     Section
         SetOutPath $INSTDIR
         AddSize 3000 # compressed (temporary)
         AddSize 10000 # decompressed
 
-        !insertmacro Download https://thecrewunlimited.com/TCUNet/TCULauncher/TCULauncher-1.1.5.0.7z "TCULauncher.7z"
+        !insertmacro Download https://thecrewunlimited.com/TCUNet/TCULauncher/TCULauncher-1.2.0.1.7z "TCULauncher.7z"
         Nsis7z::ExtractWithDetails "TCULauncher.7z" "Installing package %s..."
         Delete "TCULauncher.7z"
 
@@ -36,12 +36,12 @@ SectionGroup "The Crew Unlimited (Server Emulator) v1.1.5.0"
         nsExec::ExecToLog /OEM 'icacls "$INSTDIR" /grant *S-1-5-32-545:(OI)(CI)M /T'
     SectionEnd
 
-    Section "Microsoft .NET Desktop Runtime 8.0.20 (x64)"
+    Section "Microsoft .NET Desktop Runtime 8.0.22 (x64)"
         SetOutPath $INSTDIR
         AddSize 61000  # compressed (temporary)
         AddSize 100000 # decompressed
 
-        !insertmacro Download https://builds.dotnet.microsoft.com/dotnet/WindowsDesktop/8.0.20/windowsdesktop-runtime-8.0.20-win-x64.exe "windowsdesktop-runtime-win-x64.exe"
+        !insertmacro Download https://builds.dotnet.microsoft.com/dotnet/WindowsDesktop/8.0.22/windowsdesktop-runtime-8.0.22-win-x64.exe "windowsdesktop-runtime-win-x64.exe"
         ExecWait '"windowsdesktop-runtime-win-x64.exe" /Q' $0
         Delete "windowsdesktop-runtime-win-x64.exe"
     SectionEnd

@@ -18,7 +18,7 @@ Section "Black Mesa (with 2023 update)"
     #!insertmacro Download https://ia600500.us.archive.org/11/items/blackmesa.2/blackmesa.2.zip blackmesa.2.zip
 
     # So let's use the 2012 version in 7z...
-    !insertmacro Download https://ia802205.us.archive.org/6/items/blackmesasource2012/blackmesa.7z "blackmesa.7z"
+    !insertmacro Download https://archive.org/download/blackmesasource2012/blackmesa.7z "blackmesa.7z"
     Nsis7z::ExtractWithDetails "blackmesa.7z" "Installing package %s..."
     Delete "blackmesa.7z"
 

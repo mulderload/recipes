@@ -21,10 +21,12 @@ SectionGroup /e "HD Textures" fov
         AddSize 1111490
         SetOutPath $INSTDIR\gameroot
         !insertmacro Download http://www.duke4.org/files/nightfright/hrp/duke3d_hrp.zip "duke3d_hrp.zip"
-        !insertmacro Download https://cdn1.mulderload.eu/g-pub/p/duke-nukem-3d-megaton-edition/duke3d_megaton_hrp_override_custom.zip "duke3d_megaton_hrp_override_custom.zip"
+        !insertmacro Download https://cdn2.mulderload.eu/g/duke-nukem-3d-megaton-edition/duke3d_megaton_hrp_override_custom.zip "duke3d_megaton_hrp_override_custom.zip"
         !insertmacro Download http://www.duke4.org/files/nightfright/related/dukedc_hrp.zip "dukedc_hrp.zip"
-        !insertmacro Download https://cdn1.mulderload.eu/g-pub/p/duke-nukem-3d-megaton-edition/nwinter_hrp.zip "nwinter_hrp.zip"
-        !insertmacro Download https://cdn1.mulderload.eu/g-pub/p/duke-nukem-3d-megaton-edition/vacation_hrp.zip "vacation_hrp.zip"
+        !insertmacro Download https://cdn2.mulderload.eu/g/duke-nukem-3d-megaton-edition/nwinter_hrp.zip "nwinter_hrp.zip"
+        !insertmacro Download https://cdn2.mulderload.eu/g/duke-nukem-3d-megaton-edition/vacation_hrp.zip "vacation_hrp.zip"
+        !insertmacro Download https://cdn2.mulderload.eu/g/duke-nukem-3d-megaton-edition/classic_monsters.zip "classic_monsters.zip"
+        !insertmacro Download https://cdn2.mulderload.eu/g/duke-nukem-3d-megaton-edition/classic_weapons.zip "classic_weapons.zip"
     SectionEnd
 
     Section "AI Upscale v1.3"
@@ -46,12 +48,12 @@ SectionGroup /e "MulderLauncher (latest)"
         CopyFiles "MulderLauncher.exe" "duke3d.exe"
     SectionEnd
 
-    Section /o "Microsoft .NET Desktop Runtime 8.0.20 (x64)"
+    Section /o "Microsoft .NET Desktop Runtime 8.0.22 (x64)"
         SetOutPath $INSTDIR
         AddSize 61000  # compressed (temporary)
         AddSize 100000 # decompressed
 
-        !insertmacro Download https://builds.dotnet.microsoft.com/dotnet/WindowsDesktop/8.0.20/windowsdesktop-runtime-8.0.20-win-x64.exe "windowsdesktop-runtime-win-x64.exe"
+        !insertmacro Download https://builds.dotnet.microsoft.com/dotnet/WindowsDesktop/8.0.22/windowsdesktop-runtime-8.0.22-win-x64.exe "windowsdesktop-runtime-win-x64.exe"
         ExecWait '"windowsdesktop-runtime-win-x64.exe" /Q' $0
         Delete "windowsdesktop-runtime-win-x64.exe"
     SectionEnd

@@ -38,7 +38,7 @@ SectionGroup /e "[Steam] Restore Fallout 4 to v1.10.163" slang
         Delete "Data\ccSBJFO4003-Grenade - Textures.ba2"
         Delete "Data\ccSBJFO4003-Grenade.esl"
         Delete "Fallout4IDs.ccc"
-        !insertmacro DownloadRange https://cdn.steampatches.com/g/p/fallout-4/depot_377163_downgrade.7z "depot_377163_downgrade.7z" 30
+        !insertmacro DownloadRange https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade/depot_377163_downgrade.7z "depot_377163_downgrade.7z" 30
         Nsis7z::ExtractWithDetails "depot_377163_downgrade.7z.001" "Downgrading depot 377163 %s..."
         !insertmacro DeleteRange "depot_377163_downgrade.7z" 30
 
@@ -62,28 +62,28 @@ SectionGroup /e "[Steam] Restore Fallout 4 to v1.10.163" slang
         
         IfFileExists "$INSTDIR\Data\Fallout4 - Voices_fr.ba2" 0 end_377165
             DetailPrint " // Downgrade depot_377165 (base game, fr)"
-            !insertmacro DownloadRange https://cdn.steampatches.com/g/p/fallout-4/depot_377165_downgrade.7z "depot_377165_downgrade.7z" 5
+            !insertmacro DownloadRange https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade/depot_377165_downgrade.7z "depot_377165_downgrade.7z" 5
             Nsis7z::ExtractWithDetails "depot_377165_downgrade.7z.001" "Downgrading depot 377165 %s..."
             !insertmacro DeleteRange "depot_377165_downgrade.7z" 5
             end_377165:
         
         IfFileExists "$INSTDIR\Data\Fallout4 - Voices_de.ba2" 0 end_377166
             DetailPrint " // Downgrade depot_377166 (base game, de)"
-            !insertmacro DownloadRange https://cdn.steampatches.com/g/p/fallout-4/depot_377166_downgrade.7z "depot_377166_downgrade.7z" 5
+            !insertmacro DownloadRange https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade/depot_377166_downgrade.7z "depot_377166_downgrade.7z" 5
             Nsis7z::ExtractWithDetails "depot_377166_downgrade.7z.001" "Downgrading depot 377166 %s..."
             !insertmacro DeleteRange "depot_377166_downgrade.7z" 5
             end_377166:
 
         IfFileExists "$INSTDIR\Data\Fallout4 - Voices_it.ba2" 0 end_377167
             DetailPrint " // Downgrade depot_377167 (base game, it)"
-            !insertmacro DownloadRange https://cdn.steampatches.com/g/p/fallout-4/depot_377167_downgrade.7z "depot_377167_downgrade.7z" 5
+            !insertmacro DownloadRange https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade/depot_377167_downgrade.7z "depot_377167_downgrade.7z" 5
             Nsis7z::ExtractWithDetails "depot_377167_downgrade.7z.001" "Downgrading depot 377167 file %s..."
             !insertmacro DeleteRange "depot_377167_downgrade.7z" 5
             end_377167:
 
         IfFileExists "Data\Fallout4 - Voices_es.ba2" 0 end_377168
             DetailPrint " // Downgrade depot_377168 (base game, es)"
-            !insertmacro DownloadRange https://cdn.steampatches.com/g/p/fallout-4/depot_377168_downgrade.7z "depot_377168_downgrade.7z" 5
+            !insertmacro DownloadRange https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade/depot_377168_downgrade.7z "depot_377168_downgrade.7z" 5
             Nsis7z::ExtractWithDetails "depot_377168_downgrade.7z.001" "Downgrading depot 377168 %s..."
             !insertmacro DeleteRange "depot_377168_downgrade.7z" 5
             end_377168:
@@ -124,7 +124,7 @@ SectionGroup /e "[Steam] Restore Fallout 4 to v1.10.163" slang
             Rename "Data\Video\LUCK_ja.bk2" "Data\Video\LUCK.bk2"
             Rename "Data\Video\PERCEPTION_ja.bk2" "Data\Video\PERCEPTION.bk2"
             Rename "Data\Video\STRENGTH_ja.bk2" "Data\Video\STRENGTH.bk2"
-            !insertmacro DownloadRange https://cdn.steampatches.com/g/p/fallout-4/depot_393884_downgrade.7z "depot_393884_downgrade.7z" 4
+            !insertmacro DownloadRange https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade/depot_393884_downgrade.7z "depot_393884_downgrade.7z" 4
             Nsis7z::ExtractWithDetails "depot_393884_downgrade.7z.001" "Downgrading depot 393884 %s..."
             !insertmacro DeleteRange "depot_393884_downgrade.7z" 4
             end_393884:
@@ -197,7 +197,7 @@ SectionGroup /e "[Steam] Restore Fallout 4 to v1.10.163" slang
         SetOutPath $INSTDIR
 
         DetailPrint " // Downgrade depot 393883 (base game, cn)"
-        !insertmacro DownloadRange https://cdn.steampatches.com/g/p/fallout-4/depot_393883_downgrade.7z "depot_393883_downgrade.7z" 6
+        !insertmacro DownloadRange https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade/depot_393883_downgrade.7z "depot_393883_downgrade.7z" 6
         Nsis7z::ExtractWithDetails "depot_393883_downgrade.7z.001" "Downgrading depot 393883 %s..."
         !insertmacro DeleteRange "depot_393883_downgrade.7z" 6
 

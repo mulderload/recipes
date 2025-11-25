@@ -40,7 +40,7 @@ SectionGroupEnd
 Section /o "Bonus missions (missing from Steam release)"
     SetOutPath $INSTDIR
 
-    !insertmacro Download https://ia601803.us.archive.org/13/items/splinter-cell-extra-content/Splinter_cell_missing_maps.7z "Splinter_cell_missing_maps.7z"
+    !insertmacro Download https://archive.org/download/splinter-cell-extra-content/Splinter_cell_missing_maps.7z "Splinter_cell_missing_maps.7z"
     Nsis7z::ExtractWithDetails "Splinter_cell_missing_maps.7z" "Installing package %s..."
     Delete "Splinter_cell_missing_maps.7z"
 SectionEnd

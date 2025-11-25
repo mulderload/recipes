@@ -9,7 +9,7 @@ Section "Prey (Limited Collectors Edition) + Patch v1.4"
     !insertmacro Get7z
 
     # Download and extract iso
-    !insertmacro Download https://ia801007.us.archive.org/30/items/PreyUSAEnFrDeEsIt/Prey%20%28USA%29%20%28En%2CFr%2CDe%2CEs%2CIt%29.iso "Prey (USA) (En,Fr,De,Es,It).iso"
+    !insertmacro Download https://archive.org/download/PreyUSAEnFrDeEsIt/Prey%20(USA)%20(En%2CFr%2CDe%2CEs%2CIt).iso "Prey (USA) (En,Fr,De,Es,It).iso"
     nsExec::ExecToLog '".\7z.exe" x -aoa -o".\" "Prey (USA) (En,Fr,De,Es,It).iso"'
     Delete "Prey (USA) (En,Fr,De,Es,It).iso"
 

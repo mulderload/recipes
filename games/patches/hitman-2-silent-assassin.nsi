@@ -8,7 +8,7 @@ Name "Hitman 2: Silent Assassin [PATCHS]"
 Section "Force version to GOG v1.01 (if required)"
     SetOutPath $INSTDIR
 
-    !insertmacro DownloadIfDifferent "hitman2.exe" "8eda1825c31521adb91c838b668a4c09ed51ac6d" https://cdn1.mulderload.eu/g/p/hitman-2-silent-assassin/Steam_v1.02_to_GOG_v1.01.7z "Steam_v1.02_to_GOG_v1.01.7z"
+    !insertmacro DownloadIfDifferent "hitman2.exe" "8eda1825c31521adb91c838b668a4c09ed51ac6d" https://cdn2.mulderload.eu/g/hitman-2-silent-assassin/Steam_v1.02_to_GOG_v1.01.7z "Steam_v1.02_to_GOG_v1.01.7z"
     IfFileExists "Steam_v1.02_to_GOG_v1.01.7z" yes no
     yes: 
         Nsis7z::ExtractWithDetails "Steam_v1.02_to_GOG_v1.01.7z" "Installing package %s..."
@@ -23,8 +23,7 @@ Section "Widescreen fix (by nemesis2000) + dgVoodoo"
     !insertmacro Download https://raw.githubusercontent.com/mulderload/recipes/refs/heads/main/resources/hitman-2-silent-assassin/hitman2.ini "hitman2.ini"
 
     # nemesis2000 Widescreen Fix
-    #!insertmacro DownloadRedirect https://redirect.mulderload.eu/pcgw/2787-hitman-2-silent-assassin-widescreen-fix/13816 "WidescreenFix.zip"
-    !insertmacro Download https://cdn1.mulderload.eu/g/p/hitman-2-silent-assassin/Hitman%202%20Silent%20Assassin%20Widescreen%20Fix.zip "WidescreenFix.zip"
+    !insertmacro DownloadRedirect https://redirect.mulderload.eu/pcgw/2787-hitman-2-silent-assassin-widescreen-fix/13816 "WidescreenFix.zip"
     nsisunz::Unzip "WidescreenFix.zip" ".\"
     Delete "WidescreenFix.zip"
 
@@ -48,8 +47,7 @@ SectionEnd
 SectionGroup /e "Controller Support (by mutantx20)"
     Section
         SetOutPath $INSTDIR
-        #!insertmacro DownloadRedirect https://redirect.mulderload.eu/pcgw/2820-hitman-2-controller-fix/13930 "hitman_2_controller.7z"
-        !insertmacro Download https://cdn1.mulderload.eu/g/p/hitman-2-silent-assassin/hitman%202%20controller.7z "hitman_2_controller.7z"
+        !insertmacro DownloadRedirect https://redirect.mulderload.eu/pcgw/2820-hitman-2-controller-fix/13930 "hitman_2_controller.7z"
         Nsis7z::ExtractWithDetails "hitman_2_controller.7z" "Installing package %s..."
         Delete "hitman_2_controller.7z"
 
@@ -71,25 +69,25 @@ SectionGroupEnd
 SectionGroup /e "Language Patch" lang
     Section /o "French Patch" lang_fr
         SetOutPath $INSTDIR
-        !insertmacro Download https://cdn1.mulderload.eu/g/p/hitman-2-silent-assassin/GOG_v1.01_to_French.7z "GOG_v1.01_to_French.7z"
+        !insertmacro Download https://cdn2.mulderload.eu/g/hitman-2-silent-assassin/GOG_v1.01_to_French.7z "GOG_v1.01_to_French.7z"
         Nsis7z::ExtractWithDetails "GOG_v1.01_to_French.7z" "Installing package %s..."
         Delete "GOG_v1.01_to_French.7z"
     SectionEnd
     Section /o "German Patch" lang_de
         SetOutPath $INSTDIR
-        !insertmacro Download https://cdn1.mulderload.eu/g/p/hitman-2-silent-assassin/GOG_v1.01_to_German.7z "GOG_v1.01_to_German.7z"
+        !insertmacro Download https://cdn2.mulderload.eu/g/hitman-2-silent-assassin/GOG_v1.01_to_German.7z "GOG_v1.01_to_German.7z"
         Nsis7z::ExtractWithDetails "GOG_v1.01_to_German.7z" "Installing package %s..."
         Delete "GOG_v1.01_to_German.7z"
     SectionEnd
     Section /o "Italian Patch" lang_it
         SetOutPath $INSTDIR
-        !insertmacro Download https://cdn1.mulderload.eu/g/p/hitman-2-silent-assassin/GOG_v1.01_to_Italian.7z "GOG_v1.01_to_Italian.7z"
+        !insertmacro Download https://cdn2.mulderload.eu/g/hitman-2-silent-assassin/GOG_v1.01_to_Italian.7z "GOG_v1.01_to_Italian.7z"
         Nsis7z::ExtractWithDetails "GOG_v1.01_to_Italian.7z" "Installing package %s..."
         Delete "GOG_v1.01_to_Italian.7z"
     SectionEnd
     Section /o "Spanish Patch" lang_es
         SetOutPath $INSTDIR
-        !insertmacro Download https://cdn1.mulderload.eu/g/p/hitman-2-silent-assassin/GOG_v1.01_to_Spanish.7z "GOG_v1.01_to_Spanish.7z"
+        !insertmacro Download https://cdn2.mulderload.eu/g/hitman-2-silent-assassin/GOG_v1.01_to_Spanish.7z "GOG_v1.01_to_Spanish.7z"
         Nsis7z::ExtractWithDetails "GOG_v1.01_to_Spanish.7z" "Installing package %s..."
         Delete "GOG_v1.01_to_Spanish.7z"
     SectionEnd
