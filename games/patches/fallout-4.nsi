@@ -1,17 +1,71 @@
-!define MUI_WELCOMEPAGE_TEXT "Welcome to this NSIS installer from the MulderLoad project.$\r$\n$\r$\nIt will restore your Steam installation of Fallout 4 to v1.10.163 (the pre-next-gen version).$\r$\n$\r$\nIt is compatible with every editions (base game only, GOTY, and anything between) and every languages.$\r$\n$\r$\nThis installer will auto-detect your installed language and your installed DLCs, then will download 'delta' downgrades for the necessary Steam depots.$\r$\n$\r$\nWARNING (for chineses): if your Fallout 4 is in chinese, auto language detection will sadly not work for you. So, you will have to check Chinese in the components page."
+!define MUI_WELCOMEPAGE_TEXT "Welcome to this NSIS installer from the MulderLoad project.$\r$\n$\r$\nIt will restore your Steam installation of Fallout 4 from v1.11.169 (november 2025) to v1.10.163 (december 2019).$\r$\n$\r$\nIt is compatible with every editions (base game only, GOTY, and anything between) and every languages.$\r$\n$\r$\nThis installer will auto-detect your installed language and your installed DLCs, then will download 'delta' downgrades for the necessary Steam depots.$\r$\n$\r$\nWARNING (for chineses): if your Fallout 4 is in chinese, auto language detection will sadly not work for you. So, you will have to check Chinese in the components page."
 !include "..\..\templates\select_exe.nsh"
+!include "..\..\templates\includes\xdelta3.nsh"
 Name "Fallout 4 [Steam Downgrader]"
 
-SectionGroup /e "[Steam] Restore Fallout 4 to v1.10.163" slang
+Var /GLOBAL F4_Language
+Var /GLOBAL DLC_Automatron
+Var /GLOBAL DLC_Workshop
+
+SectionGroup /e "[Steam] Downgrade to v1.10.163 (oldgen)" slang
+    Section "Auto-detect language (doesn't work for chinese)" slang_auto
+        StrCpy $F4_Language "en"
+
+        IfFileExists "$INSTDIR\Data\Fallout4 - Voices_fr.ba2" 0 +2
+            StrCpy $F4_Language "fr"
+
+        IfFileExists "$INSTDIR\Data\Fallout4 - Voices_de.ba2" 0 +2
+            StrCpy $F4_Language "de"
+
+        IfFileExists "$INSTDIR\Data\Fallout4 - Voices_it.ba2" 0 +2
+            StrCpy $F4_Language "it"
+            
+        IfFileExists "$INSTDIR\Data\Fallout4 - Voices_es.ba2" 0 +2
+            StrCpy $F4_Language "es"
+            
+        IfFileExists "$INSTDIR\Data\Video\Intro_pl.bk2" 0 +2
+            StrCpy $F4_Language "pl"
+            
+        IfFileExists "$INSTDIR\Data\Video\Intro_ru.bk2" 0 +2
+            StrCpy $F4_Language "ru"
+            
+        IfFileExists "$INSTDIR\Data\Video\Intro_ptbr.bk2" 0 +2
+            StrCpy $F4_Language "ptbr"
+            
+        IfFileExists "$INSTDIR\Data\Video\Intro_ja.bk2" 0 +2
+            StrCpy $F4_Language "ja"
+    SectionEnd
+
+    Section /o "My game is in traditional chinese" slang_cn
+        StrCpy $F4_Language "cn"
+    SectionEnd
+
     Section
+        StrCpy $DLC_Automatron "no"
+        StrCpy $DLC_Workshop "no"
+
+        IfFileExists "$INSTDIR\Data\DLCRobot.cdx" 0 +2
+            StrCpy $DLC_Automatron "yes"
+        
+        IfFileExists "$INSTDIR\Data\DLCworkshop01.cdx" 0 +2
+            StrCpy $DLC_Workshop "yes"
+
+        MessageBox MB_YESNO|MB_ICONQUESTION "Please check auto-detection before continue.$\r$\n$\r$\nDetected language : $F4_Language$\r$\nAutomatron DLC: $DLC_Automatron$\r$\nWasteland Workshop DLC: $DLC_Workshop$\r$\n$\r$\nIs this correct?" IDYES +2
+        Abort
+
         SetOutPath $INSTDIR
 
-        DetailPrint " // Downgrade depot 377162 (base game)"
-        !insertmacro Download https://www.mediafire.com/file_premium/r156kxarxsru7rd/depot_377162_downgrade.7z/file "depot_377162_downgrade.7z"
-        Nsis7z::ExtractWithDetails "depot_377162_downgrade.7z" "Downgrading depot 377162 %s..."
-        Delete "depot_377162_downgrade.7z"
+        DetailPrint " // Downloading downgrade 377161 (Base game)"
+        !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_2025_11/377161.7z "377161.7z"
+        Nsis7z::ExtractWithDetails "377161.7z" "Extracting downgrade 377162 %s..."
+        Delete "377161.7z"
 
-        DetailPrint " // Downgrade depot 377163 (base game)"
+        DetailPrint " // Downloading downgrade 377162 (Base game)"
+        !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_2025_11/377162.7z "377162.7z"
+        Nsis7z::ExtractWithDetails "377162.7z" "Extracting downgrade 377162 %s..."
+        Delete "377162.7z"
+
+        DetailPrint " // Downloading downgrade 377163 (Base game)"
         Delete "Data\ccBGSFO4044-HellfirePowerArmor.esl"
         Delete "Data\ccBGSFO4046-TesCan - Main.ba2"
         Delete "Data\ccBGSFO4046-TesCan - Textures.ba2"
@@ -37,80 +91,51 @@ SectionGroup /e "[Steam] Restore Fallout 4 to v1.10.163" slang
         Delete "Data\ccSBJFO4003-Grenade - Main.ba2"
         Delete "Data\ccSBJFO4003-Grenade - Textures.ba2"
         Delete "Data\ccSBJFO4003-Grenade.esl"
+        Delete "Data\Fallout4 - TexturesPatch.ba2"
         Delete "Fallout4IDs.ccc"
-        !insertmacro DownloadRange https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade/depot_377163_downgrade.7z "depot_377163_downgrade.7z" 30
-        Nsis7z::ExtractWithDetails "depot_377163_downgrade.7z.001" "Downgrading depot 377163 %s..."
-        !insertmacro DeleteRange "depot_377163_downgrade.7z" 30
+        !insertmacro DownloadRange https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_2025_11/377163.7z "377163.7z" 22
+        Nsis7z::ExtractWithDetails "377163.7z.001" "Extracting downgrade 377163 %s..."
+        !insertmacro DeleteRange "377163.7z" 22
 
-        IfFileExists "Data\DLCRobot.cdx" 0 end_435870
-            DetailPrint " // Downgrade depot 435870 (automatron)"
-            !insertmacro Download https://www.mediafire.com/file_premium/mi6unii9wtz5kal/depot_435870_downgrade.7z/file "depot_435870_downgrade.7z"
-            Nsis7z::ExtractWithDetails "depot_435870_downgrade.7z" "Downgrading depot 435870 %s..."
-            Delete "depot_435870_downgrade.7z"
-            end_435870:
-        
-        IfFileExists "Data\DLCworkshop01.cdx" 0 end_435880
-            DetailPrint " // Downgrade depot 435880 (wasteland workshop)"
-            !insertmacro Download https://www.mediafire.com/file_premium/bv92yqz75rmcjnb/depot_435880_downgrade.7z/file "depot_435880_downgrade.7z"
-            Nsis7z::ExtractWithDetails "depot_435880_downgrade.7z" "Downgrading depot 435880 %s..."
-            Delete "depot_435880_downgrade.7z"
-            end_435880:
-    SectionEnd
-
-    Section "All others languages (auto-detection)" slang_auto
-        SetOutPath $INSTDIR
-        
-        IfFileExists "$INSTDIR\Data\Fallout4 - Voices_fr.ba2" 0 end_377165
-            DetailPrint " // Downgrade depot_377165 (base game, fr)"
-            !insertmacro DownloadRange https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade/depot_377165_downgrade.7z "depot_377165_downgrade.7z" 5
-            Nsis7z::ExtractWithDetails "depot_377165_downgrade.7z.001" "Downgrading depot 377165 %s..."
-            !insertmacro DeleteRange "depot_377165_downgrade.7z" 5
-            end_377165:
-        
-        IfFileExists "$INSTDIR\Data\Fallout4 - Voices_de.ba2" 0 end_377166
-            DetailPrint " // Downgrade depot_377166 (base game, de)"
-            !insertmacro DownloadRange https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade/depot_377166_downgrade.7z "depot_377166_downgrade.7z" 5
-            Nsis7z::ExtractWithDetails "depot_377166_downgrade.7z.001" "Downgrading depot 377166 %s..."
-            !insertmacro DeleteRange "depot_377166_downgrade.7z" 5
-            end_377166:
-
-        IfFileExists "$INSTDIR\Data\Fallout4 - Voices_it.ba2" 0 end_377167
-            DetailPrint " // Downgrade depot_377167 (base game, it)"
-            !insertmacro DownloadRange https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade/depot_377167_downgrade.7z "depot_377167_downgrade.7z" 5
-            Nsis7z::ExtractWithDetails "depot_377167_downgrade.7z.001" "Downgrading depot 377167 file %s..."
-            !insertmacro DeleteRange "depot_377167_downgrade.7z" 5
-            end_377167:
-
-        IfFileExists "Data\Fallout4 - Voices_es.ba2" 0 end_377168
-            DetailPrint " // Downgrade depot_377168 (base game, es)"
-            !insertmacro DownloadRange https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade/depot_377168_downgrade.7z "depot_377168_downgrade.7z" 5
-            Nsis7z::ExtractWithDetails "depot_377168_downgrade.7z.001" "Downgrading depot 377168 %s..."
-            !insertmacro DeleteRange "depot_377168_downgrade.7z" 5
-            end_377168:
-        
-        IfFileExists "Data\Video\Intro_pl.bk2" 0 end_393880
-            DetailPrint " // Downgrade depot_393880 (base game, pl)"
-            !insertmacro Download https://www.mediafire.com/file_premium/ba8bj2pfqz8pp70/depot_393880_downgrade.7z/file "depot_393880_downgrade.7z"
-            Nsis7z::ExtractWithDetails "depot_393880_downgrade.7z" "Downgrading depot 393880 %s..."
-            Delete "depot_393880_downgrade.7z"
-            end_393880:
-
-        IfFileExists "Data\Video\Intro_ru.bk2" 0 end_393881
-            DetailPrint " // Downgrade depot_393881 (base game, ru)"
-            !insertmacro Download https://www.mediafire.com/file_premium/sjtxbf6j35zojp8/depot_393881_downgrade.7z/file "depot_393881_downgrade.7z"
-            Nsis7z::ExtractWithDetails "depot_393881_downgrade.7z" "Downgrading depot 393881 %s..."
-            Delete "depot_393881_downgrade.7z"
-            end_393881:
-        
-        IfFileExists "Data\Video\Intro_ptbr.bk2" 0 end_393882
-            DetailPrint " // Downgrade depot_393882 (base game, pt)"
-            !insertmacro Download https://www.mediafire.com/file_premium/riye91yis9jcj5h/depot_393882_downgrade.7z/file "depot_393882_downgrade.7z"
-            Nsis7z::ExtractWithDetails "depot_393882_downgrade.7z" "Downgrading depot 393882 %s..."
-            Delete "depot_393882_downgrade.7z"
-            end_393882:
-
-        IfFileExists "Data\Video\Intro_ja.bk2" 0 end_393884
-            DetailPrint " // Downgrade depot_393884 (base game, ja)"
+        ${If} $F4_Language == "fr"
+            DetailPrint " // Downloading downgrade 377165 (Base game, French)"
+            !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_2025_11/377165.7z "377165.7z"
+            Nsis7z::ExtractWithDetails "377165.7z" "Extracting downgrade 377165 %s..."
+            Delete "377165.7z"
+        ${ElseIf} $F4_Language == "de"
+            DetailPrint " // Downloading downgrade 377166 (Base game, German)"
+            !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_2025_11/377166.7z "377166.7z"
+            Nsis7z::ExtractWithDetails "377166.7z" "Extracting downgrade 377166 %s..."
+            Delete "377166.7z"
+        ${ElseIf} $F4_Language == "it"
+            DetailPrint " // Downloading downgrade 377167 (Base game, Italian)"
+            !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_2025_11/377167.7z "377167.7z"
+            Nsis7z::ExtractWithDetails "377167.7z" "Extracting downgrade 377167 %s..."
+            Delete "377167.7z"
+        ${ElseIf} $F4_Language == "es"
+            DetailPrint " // Downloading downgrade 377168 (Base game, Spanish)"
+            !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_2025_11/377168.7z "377168.7z"
+            Nsis7z::ExtractWithDetails "377168.7z" "Extracting downgrade 377168 %s..."
+            Delete "377168.7z"
+        ${ElseIf} $F4_Language == "pl"
+            DetailPrint " // Downloading downgrade 393880 (Base game, Polish)"
+            !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_2025_11/393880.7z "393880.7z"
+            Nsis7z::ExtractWithDetails "393880.7z" "Extracting downgrade 393880 %s..."
+            Delete "393880.7z"
+        ${ElseIf} $F4_Language == "ru"
+            DetailPrint " // Downloading downgrade 393881 (Base game, Russian)"
+            !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_2025_11/393881.7z "393881.7z"
+            Nsis7z::ExtractWithDetails "393881.7z" "Extracting downgrade 393881 %s..."
+            Delete "393881.7z"
+        ${ElseIf} $F4_Language == "ptbr"
+            DetailPrint " // Downloading downgrade 393882 (Base game, Portuguese-Brazil)"
+            !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_2025_11/393882.7z "393882.7z"
+            Nsis7z::ExtractWithDetails "393882.7z" "Extracting downgrade 393882 %s..."
+            Delete "393882.7z"
+        ${ElseIf} $F4_Language == "ja"
+            DetailPrint " // Downloading downgrade 393884 (Base game, Japanese)"
+            Rename "Data\Fallout4 - Voices_jp.ba2" "Data\Fallout4 - Voices.ba2"
+            Rename "Data\Fallout4 - Voices_rep_ja.ba2" "Data\Fallout4 - Voices_rep.ba2"
             Rename "Data\Video\AGILITY_ja.bk2" "Data\Video\AGILITY.bk2"
             Rename "Data\Video\CHARISMA_ja.bk2" "Data\Video\CHARISMA.bk2"
             Rename "Data\Video\Endgame_FEMALE_A_ja.bk2" "Data\Video\Endgame_FEMALE_A.bk2"
@@ -124,98 +149,100 @@ SectionGroup /e "[Steam] Restore Fallout 4 to v1.10.163" slang
             Rename "Data\Video\LUCK_ja.bk2" "Data\Video\LUCK.bk2"
             Rename "Data\Video\PERCEPTION_ja.bk2" "Data\Video\PERCEPTION.bk2"
             Rename "Data\Video\STRENGTH_ja.bk2" "Data\Video\STRENGTH.bk2"
-            !insertmacro DownloadRange https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade/depot_393884_downgrade.7z "depot_393884_downgrade.7z" 4
-            Nsis7z::ExtractWithDetails "depot_393884_downgrade.7z.001" "Downgrading depot 393884 %s..."
-            !insertmacro DeleteRange "depot_393884_downgrade.7z" 4
-            end_393884:
+            !insertmacro DownloadRange https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_2025_11/393884.7z "393884.7z" 4
+            Nsis7z::ExtractWithDetails "393884.7z.001" "Extracting downgrade 393884 %s..."
+            !insertmacro DeleteRange "393884.7z" 4
+        ${ElseIf} $F4_Language == "cn"
+            DetailPrint " // Downloading downgrade 393883 (Base game, Chinese-Traditional)"
+            !insertmacro DownloadRange https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_2025_11/393883.7z "393883.7z" 6
+            Nsis7z::ExtractWithDetails "393883.7z.001" "Extracting downgrade 393883 %s..."
+            !insertmacro DeleteRange "393883.7z" 6
+        ${EndIf}
 
-        IfFileExists "Data\DLCRobot - Voices_en.ba2" 0 end_435871
-            DetailPrint " // Downgrade depot_435871 (automatron, en)"
-            !insertmacro Download https://www.mediafire.com/file_premium/umfxzmmzafn8uds/depot_435871_downgrade.7z/file "depot_435871_downgrade.7z"
-            Nsis7z::ExtractWithDetails "depot_435871_downgrade.7z" "Downgrading depot 435871 %s..."
-            Delete "depot_435871_downgrade.7z"
-            end_435871:
+        ${If} $DLC_Automatron == "yes"
+            DetailPrint " // Downloading downgrade 435870 (Automatron DLC)"
+            !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_2025_11/435870.7z "435870.7z"
+            Nsis7z::ExtractWithDetails "435870.7z" "Extracting downgrade 435870 %s..."
+            Delete "435870.7z"
 
-        IfFileExists "Data\DLCRobot - Voices_fr.ba2" 0 end_435872
-            DetailPrint " // Downgrade depot_435872 (automatron, fr)"
-            !insertmacro Download https://www.mediafire.com/file_premium/g78ci3ymsrhy7j0/depot_435872_downgrade.7z/file "depot_435872_downgrade.7z"
-            Nsis7z::ExtractWithDetails "depot_435872_downgrade.7z" "Downgrading depot 435872 %s..."
-            Delete "depot_435872_downgrade.7z"
-            end_435872:
+            ${If} $F4_Language == "ja"
+                DetailPrint " // Downloading downgrade 404091 (Automatron DLC, Japanese)"
+                !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_2025_11/404091.7z "404091.7z"
+                Nsis7z::ExtractWithDetails "404091.7z" "Extracting downgrade 404091 %s..."
+                Delete "404091.7z"
+            ${ElseIf} $F4_Language == "en"
+                DetailPrint " // Downloading downgrade 435871 (Automatron DLC, English)"
+                !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_2025_11/435871.7z "435871.7z"
+                Nsis7z::ExtractWithDetails "435871.7z" "Downgrading depot 435871 %s..."
+                Delete "435871.7z"
+            ${ElseIf} $F4_Language == "fr"
+                DetailPrint " // Downloading downgrade 435872 (Automatron DLC, French)"
+                !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_2025_11/435872.7z "435872.7z"
+                Nsis7z::ExtractWithDetails "435872.7z" "Downgrading depot 435872 %s..."
+                Delete "435872.7z"
+            ${ElseIf} $F4_Language == "de"
+                DetailPrint " // Downloading downgrade 435873 (Automatron DLC, German)"
+                !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_2025_11/435873.7z "435873.7z"
+                Nsis7z::ExtractWithDetails "435873.7z" "Downgrading depot 435873 %s..."
+                Delete "435873.7z"
+            ${ElseIf} $F4_Language == "it"
+                DetailPrint " // Downloading downgrade 435874 (Automatron DLC, Italian)"
+                !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_2025_11/435874.7z "435874.7z"
+                Nsis7z::ExtractWithDetails "435874.7z" "Downgrading depot 435874 %s..."
+                Delete "435874.7z"
+            ${ElseIf} $F4_Language == "es"
+                DetailPrint " // Downloading downgrade 435875 (Automatron DLC, Spanish)"
+                !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_2025_11/435875.7z "435875.7z"
+                Nsis7z::ExtractWithDetails "435875.7z" "Downgrading depot 435875 %s..."
+                Delete "435875.7z"
+            ${ElseIf} $F4_Language == "pl"
+                DetailPrint " // Downloading downgrade 435876 (Automatron DLC, Polish)"
+                !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_2025_11/435876.7z "435876.7z"
+                Nsis7z::ExtractWithDetails "435876.7z" "Extracting downgrade 435876 %s..."
+                Delete "435876.7z"
+            ${ElseIf} $F4_Language == "ru"
+                DetailPrint " // Downloading downgrade 435877 (Automatron DLC, Russian)"
+                !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_2025_11/435877.7z "435877.7z"
+                Nsis7z::ExtractWithDetails "435877.7z" "Extracting downgrade 435877 %s..."
+                Delete "435877.7z"
+            ${ElseIf} $F4_Language == "ptbr"
+                DetailPrint " // Downloading downgrade 435878 (Automatron DLC, Portuguese-Brazil)"
+                !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_2025_11/435878.7z "435878.7z"
+                Nsis7z::ExtractWithDetails "435878.7z" "Extracting downgrade 435878 %s..."
+                Delete "435878.7z"
+            ${ElseIf} $F4_Language == "cn"
+                DetailPrint " // Downloading downgrade 435879 (Automatron DLC, Chinese-Traditional)"
+                !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_2025_11/435879.7z "435879.7z"
+                Nsis7z::ExtractWithDetails "435879.7z" "Extracting downgrade 435879 %s..."
+                Delete "435879.7z"
+            ${EndIf}
+        ${EndIf}
 
-        IfFileExists "Data\DLCRobot - Voices_de.ba2" 0 end_435873
-            DetailPrint " // Downgrade depot_435873 (automatron, de)"
-            !insertmacro Download https://www.mediafire.com/file_premium/bf5fc9scc4wrst5/depot_435873_downgrade.7z/file "depot_435873_downgrade.7z"
-            Nsis7z::ExtractWithDetails "depot_435873_downgrade.7z" "Downgrading depot 435873 %s..."
-            Delete "depot_435873_downgrade.7z"
-            end_435873:
+        ${If} $DLC_Workshop == "yes"
+            DetailPrint " // Downloading downgrade 435880 (Wasteland Workshop DLC)"
+            !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_2025_11/435880.7z "435880.7z"
+            Nsis7z::ExtractWithDetails "435880.7z" "Extracting downgrade 435880 %s..."
+            Delete "435880.7z"
+        ${EndIf}
 
-        IfFileExists "Data\DLCRobot - Voices_it.ba2" 0 end_435874
-            DetailPrint " // Downgrade depot_435874 (automatron, it)"
-            !insertmacro Download https://www.mediafire.com/file_premium/xcndl1olonb63z4/depot_435874_downgrade.7z/file "depot_435874_downgrade.7z"
-            Nsis7z::ExtractWithDetails "depot_435874_downgrade.7z" "Downgrading depot 435874 %s..."
-            Delete "depot_435874_downgrade.7z"
-            end_435874:
-
-        IfFileExists "Data\DLCRobot - Voices_es.ba2" 0 end_435875
-            DetailPrint " // Downgrade depot_435875 (automatron, es)"
-            !insertmacro Download https://www.mediafire.com/file_premium/mk8t9bchshd2zzs/depot_435875_downgrade.7z/file "depot_435875_downgrade.7z"
-            Nsis7z::ExtractWithDetails "depot_435875_downgrade.7z" "Downgrading depot 435875 %s..."
-            Delete "depot_435875_downgrade.7z"
-            end_435875:
+        DetailPrint " // Downloading xdelta3"
+        !insertmacro Download https://github.com/jmacd/xdelta-gpl/releases/download/v3.0.11/xdelta3-3.0.11-x86_64.exe.zip "xdelta3.zip"
+        nsisunz::Unzip "xdelta3.zip" ".\"
+        Delete "xdelta3.zip"
+        Rename "xdelta3-3.0.11-x86_64.exe" "xdelta3.exe"
         
-        IfFileExists "Data\Video\Intro_pl.bk2" 0 end_435876
-            DetailPrint " // Downgrade depot_435876 (automatron, pl)"
-            !insertmacro Download https://www.mediafire.com/file_premium/gfccjh4jzop167f/depot_435876_downgrade.7z/file "depot_435876_downgrade.7z"
-            Nsis7z::ExtractWithDetails "depot_435876_downgrade.7z" "Downgrading depot 435876 %s..."
-            Delete "depot_435876_downgrade.7z"
-            end_435876:
-
-        IfFileExists "Data\Video\Intro_ru.bk2" 0 end_435877
-            DetailPrint " // Downgrade depot_435877 (automatron, ru)"
-            !insertmacro Download https://www.mediafire.com/file_premium/nlrfrkl23jfsflv/depot_435877_downgrade.7z/file "depot_435877_downgrade.7z"
-            Nsis7z::ExtractWithDetails "depot_435877_downgrade.7z" "Downgrading depot 435877 %s..."
-            Delete "depot_435877_downgrade.7z"
-            end_435877:
-        
-        IfFileExists "Data\Video\Intro_ptbr.bk2" 0 end_435878
-            DetailPrint " // Downgrade depot_435878 (automatron, en)"
-            !insertmacro Download https://www.mediafire.com/file_premium/dwp26uh3vrppl6j/depot_435878_downgrade.7z/file "depot_435878_downgrade.7z"
-            Nsis7z::ExtractWithDetails "depot_435878_downgrade.7z" "Downgrading depot 435878 %s..."
-            Delete "depot_435878_downgrade.7z"
-            end_435878:
-
-        IfFileExists "Data\Video\Intro_ja.bk2" 0 end_404091
-            DetailPrint " // Downgrade depot_404091 (automatron, ja)"
-            !insertmacro Download https://www.mediafire.com/file_premium/x26wsn1yownr2cq/depot_404091_downgrade.7z/file "depot_404091_downgrade.7z"
-            Nsis7z::ExtractWithDetails "depot_404091_downgrade.7z" "Downgrading depot 404091 %s..."
-            Delete "depot_404091_downgrade.7z"
-            end_404091:
+        DetailPrint " // Applying xdelta patches"
+        !insertmacro XDelta3_ApplyPatches "$INSTDIR"
+        Delete "xdelta3.exe"
     SectionEnd
 
-    Section /o "Traditional chinese language" slang_cn
-        SetOutPath $INSTDIR
-
-        DetailPrint " // Downgrade depot 393883 (base game, cn)"
-        !insertmacro DownloadRange https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade/depot_393883_downgrade.7z "depot_393883_downgrade.7z" 6
-        Nsis7z::ExtractWithDetails "depot_393883_downgrade.7z.001" "Downgrading depot 393883 %s..."
-        !insertmacro DeleteRange "depot_393883_downgrade.7z" 6
-
-        IfFileExists "Data\DLCRobot.cdx" 0 end_435879
-            DetailPrint " // Downgrade depot 435879 (automatron, cn)"
-            !insertmacro Download https://www.mediafire.com/file_premium/xu0rmyi527viy6f/depot_435879_downgrade.7z/file "depot_435879_downgrade.7z"
-            Nsis7z::ExtractWithDetails "depot_435879_downgrade.7z" "Downgrading depot 435879 %s..."
-            Delete "depot_435879_downgrade.7z"
-            end_435879:
-    SectionEnd
-
-    Section
-        SetOutPath $INSTDIR\..\..
-
-        DetailPrint " // Block future update (appmanifest_377160.acf)"
-        SetFileAttributes "appmanifest_377160.acf" READONLY
-    SectionEnd
 SectionGroupEnd
+
+Section /o "[Steam] Block future update"
+    SetOutPath $INSTDIR\..\..
+    DetailPrint " // Block future update (appmanifest_377160.acf)"
+    SetFileAttributes "appmanifest_377160.acf" READONLY
+SectionEnd
 
 Function .onInit
     StrCpy $SELECT_FILENAME "Fallout4.exe"
