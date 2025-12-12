@@ -12,7 +12,7 @@ Function CUSTOM_PAGE_SELECT_FILE
     GetDlgItem $0 $HWNDPARENT 1
     EnableWindow $0 0
 
-	${NSD_CreateBrowseButton} 0 0 100% 12u "Localize $SELECT_FILENAME"
+	${NSD_CreateBrowseButton} 20% 40% 60% 16u "Click to localize $SELECT_FILENAME"
 	Pop $BROWSE_BUTTON
 	GetFunctionAddress $0 SelectFileDialog
 	nsDialogs::OnClick $BROWSE_BUTTON $0
