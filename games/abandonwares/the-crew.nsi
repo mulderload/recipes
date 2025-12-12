@@ -50,3 +50,13 @@ SectionGroup "The Crew Unlimited (Server Emulator) v1.2.0.1"
         nsExec::Exec "powershell.exe -Command Add-MpPreference -ExclusionPath '$INSTDIR'"
     SectionEnd
 SectionGroupEnd
+
+Section "Fix launch time too long"
+    SetOutPath "$INSTDIR"
+    AddSize 13
+
+    # https://www.nexusmods.com/watchdogs/mods/393?tab=description
+    !insertmacro Download https://cdn2.mulderload.eu/g/the-crew/systemdetection64.dll-393-1-1-1748052023.zip "systemdetection64.dll.zip"
+    nsisunz::Unzip /noextractpath /file "systemdetection64.dll" "systemdetection64.dll.zip" ".\"
+    Delete "systemdetection64.dll.zip"
+SectionEnd
