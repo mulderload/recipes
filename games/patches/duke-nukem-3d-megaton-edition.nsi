@@ -11,7 +11,7 @@ Section "eDuke32 (x64)"
     AddSize 4000  # compressed (temporary)
     AddSize 19000 # decompressed
 
-    !insertmacro Download https://dukeworld.com/eduke32/synthesis/latest/eduke32_win64_20250913-10627-e5aad1886.7z "eduke32.7z"
+    !insertmacro Download https://dukeworld.com/eduke32/synthesis/20251111-10652-39967d866/eduke32_win64_20251111-10652-39967d866.7z "eduke32.7z"
     Nsis7z::ExtractWithDetails "eduke32.7z" "Installing package %s..."
     Delete "eduke32.7z"
 SectionEnd
