@@ -44,6 +44,9 @@ SectionGroup "Die Hard: Nakatomi Plaza (USA)"
         RMDir /r "$INSTDIR\@iso"
         Delete "Unwise.exe"
         Delete "Register Die Hard Nakatomi Plaza Online.url"
+
+        ## Create Save directory to fix saves issue
+        CreateDirectory $INSTDIR\Save
     SectionEnd
 
     Section "Official patch v1.04"
