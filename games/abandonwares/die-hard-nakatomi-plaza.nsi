@@ -6,9 +6,15 @@ Name "Die Hard: Nakatomi Plaza"
 InstallDir "C:\MulderLoad\Die Hard Nakatomi Plaza"
 
 Section
-    # Add 7z exe
     SetOutPath $INSTDIR
+    DetailPrint " // Downloading 7z"
     !insertmacro Get7z
+
+    DetailPrint " // Downloading xdelta3"
+    !insertmacro Download https://github.com/jmacd/xdelta-gpl/releases/download/v3.0.11/xdelta3-3.0.11-x86_64.exe.zip "xdelta3.zip"
+    nsisunz::Unzip "xdelta3.zip" ".\"
+    Delete "xdelta3.zip"
+    Rename "xdelta3-3.0.11-x86_64.exe" "xdelta3.exe"
 SectionEnd
 
 SectionGroup "Die Hard: Nakatomi Plaza (USA)"
@@ -113,11 +119,11 @@ Section "dgVoodoo2 (fix multiple other issues)"
     !insertmacro ReplaceInFile "DisableAltEnterToToggleScreenMode   = true" "DisableAltEnterToToggleScreenMode   = false" 1 1 "$INSTDIR\dgVoodoo.conf"
 SectionEnd
 
-Section /o "Skip intro videos"
+Section "Skip intro videos"
     !insertmacro ReplaceInFile "$\"nomovies$\" $\"0$\"" "$\"nomovies$\" $\"1$\"" 1 1 "$INSTDIR\autoexec.cfg"
 SectionEnd
 
-Section "[MOD] Die Hard Improved Edition v2 beta (by ReiKaz316)"
+Section "[MOD] Die Hard Improved Edition v2 beta (by ReiKaz316)" mod
     AddSize 614400
     SetOutPath $INSTDIR
 
@@ -131,33 +137,56 @@ Section "[MOD] Die Hard Improved Edition v2 beta (by ReiKaz316)"
     Nsis7z::ExtractWithDetails "DIE_HARD_Improved_Edition_v2.0.0beta_REPACK.7z" "Installing package %s..."
     Delete "DIE_HARD_Improved_Edition_v2.0.0beta_REPACK.7z"
 
-    DetailPrint " // Downloading xdelta3"
-    !insertmacro Download https://github.com/jmacd/xdelta-gpl/releases/download/v3.0.11/xdelta3-3.0.11-x86_64.exe.zip "xdelta3.zip"
-    nsisunz::Unzip "xdelta3.zip" ".\"
-    Delete "xdelta3.zip"
-    Rename "xdelta3-3.0.11-x86_64.exe" "xdelta3.exe"
-    
     DetailPrint " // Applying xdelta patch"
     !insertmacro XDelta3_ApplyPatches "$INSTDIR"
-    Delete "xdelta3.exe"
 SectionEnd
 
-SectionGroup "Languages" lang
+SectionGroup "Language" lang
     Section "English (default)" lang_en
+        Delete "$INSTDIR\custom.cfg"
     SectionEnd
-    Section /o "English with french subtitles (VOSTFR)" lang_vostfr
+
+    Section /o "English with french subtitles (requires mod)" lang_vostfr
+        FileOpen $0 "$INSTDIR\custom.cfg" w
+        FileWrite $0 'language french'
+        FileClose $0
     SectionEnd
-    Section /o "English with german subtitles (OmU)" lang_omu
+    
+    Section /o "English with german subtitles (requires mod)" lang_omu
+        FileOpen $0 "$INSTDIR\custom.cfg" w
+        FileWrite $0 'language german'
+        FileClose $0
     SectionEnd
-    Section /o "Full french (incompatible with the mod)" lang_fr
+
+    Section /o "Full french (incompatible with mod)" lang_fr
+        FileOpen $0 "$INSTDIR\custom.cfg" w
+        FileWrite $0 'language french'
+        FileClose $0
+
+        DetailPrint " // Backup english files"
+        CreateDirectory $INSTDIR\backup
+        CopyFiles $INSTDIR\Nakatomi.rez $INSTDIR\backup\Nakatomi.rez
+        CopyFiles $INSTDIR\Nakatomi2.rez $INSTDIR\backup\Nakatomi2.rez
+
+        DetailPrint " // Download french audio xdelta"
+        SetOutPath $INSTDIR
+        !insertmacro Download https://cdn2.mulderload.eu/g/die-hard-nakatomi-plaza/french_audio_xdelta.7z "french_audio_xdelta.7z"
+        Nsis7z::ExtractWithDetails "french_audio_xdelta.7z" "Installing package %s..."
+        Delete "french_audio_xdelta.7z"
+        
+        DetailPrint " // Applying xdelta patches"
+        !insertmacro XDelta3_ApplyPatches "$INSTDIR"
     SectionEnd
 SectionGroupEnd
 
 Section
-    # Remove 7z exe
+    DetailPrint " // Remove 7z"
     Delete $INSTDIR\7z.dll
     Delete $INSTDIR\7z.exe
     RMDir /r $INSTDIR\Formats
+    
+    DetailPrint " // Remove xdelta3"
+    Delete "xdelta3.exe"
 SectionEnd
 
 Function .onInit
@@ -174,5 +203,21 @@ Function .onSelChange
             !insertmacro RadioButton ${lang_omu}
             !insertmacro RadioButton ${lang_fr}
         !insertmacro EndRadioButtons
+    ${EndIf}
+
+    ${If} ${SectionIsSelected} ${mod}
+        ${If} ${SectionIsSelected} ${lang_fr}
+            !insertmacro UnSelectSection ${mod}
+            MessageBox MB_ICONSTOP "Sorry, the mod is incompatible with the full french version, and has been unselected."
+        ${EndIf}
+    ${Else}
+        ${If} ${SectionIsSelected} ${lang_vostfr}
+            !insertmacro SelectSection ${mod}
+            MessageBox MB_OK "The mod is required for the selected language and has been automatically selected."
+        ${EndIf}
+        ${If} ${SectionIsSelected} ${lang_omu}
+            !insertmacro SelectSection ${mod}
+            MessageBox MB_OK "The mod is required for the selected language and has been automatically selected."
+        ${EndIf}
     ${EndIf}
 FunctionEnd
