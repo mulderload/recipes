@@ -142,9 +142,37 @@ Section "[MOD] Die Hard Improved Edition v2 beta (by ReiKaz316)"
     Delete "xdelta3.exe"
 SectionEnd
 
+SectionGroup "Languages" lang
+    Section "English (default)" lang_en
+    SectionEnd
+    Section /o "English with french subtitles (VOSTFR)" lang_vostfr
+    SectionEnd
+    Section /o "English with german subtitles (OmU)" lang_omu
+    SectionEnd
+    Section /o "Full french (incompatible with the mod)" lang_fr
+    SectionEnd
+SectionGroupEnd
+
 Section
     # Remove 7z exe
     Delete $INSTDIR\7z.dll
     Delete $INSTDIR\7z.exe
     RMDir /r $INSTDIR\Formats
 SectionEnd
+
+Function .onInit
+    StrCpy $1 ${lang_en} ; Radio Button
+FunctionEnd
+
+Function .onSelChange
+    ${If} ${SectionIsSelected} ${lang}
+        !insertmacro UnSelectSection ${lang}
+    ${Else}
+        !insertmacro StartRadioButtons $1
+            !insertmacro RadioButton ${lang_en}
+            !insertmacro RadioButton ${lang_vostfr}
+            !insertmacro RadioButton ${lang_omu}
+            !insertmacro RadioButton ${lang_fr}
+        !insertmacro EndRadioButtons
+    ${EndIf}
+FunctionEnd
