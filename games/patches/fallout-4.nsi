@@ -1,4 +1,4 @@
-!define MUI_WELCOMEPAGE_TEXT "Welcome to this NSIS installer from the MulderLoad project.$\r$\n$\r$\nIt will restore your Steam installation of Fallout 4 from v1.11.191 (december 2025) to v1.10.163 (december 2019).$\r$\n$\r$\nIt is compatible with every editions (base game only, GOTY, and anything between) and every languages.$\r$\n$\r$\nThis installer will auto-detect your installed language and your installed DLCs, then will download 'delta' downgrades for the necessary Steam depots.$\r$\n$\r$\nWARNING (for chineses): if your Fallout 4 is in chinese, auto language detection will sadly not work for you. So, you will have to check Chinese in the components page."
+!define MUI_WELCOMEPAGE_TEXT "Welcome to this NSIS installer from the MulderLoad project.$\r$\n$\r$\nIt will downgrade your Steam installation of Fallout 4 from v1.11.191 (december 2025) to a version of your choice (3 target versions available).$\r$\n$\r$\nIt is compatible with every editions (base game only, GOTY, and anything between) and every languages.$\r$\n$\r$\nThis installer will auto-detect your installed language and your installed DLCs, then will download 'delta' downgrades for the necessary Steam depots.$\r$\n$\r$\nWARNING (for chineses): if your Fallout 4 is in chinese, auto language detection will sadly not work for you. So, you will have to check Chinese in the components page."
 !include "..\..\templates\select_exe.nsh"
 !include "..\..\templates\includes\xdelta3.nsh"
 Name "Fallout 4 [Steam Downgrader]"
@@ -78,6 +78,7 @@ SectionGroup /e "Downgrade Steam version (v1.11.191) to" version
     SectionEnd
     
     Section "v1.10.163 (pre-next-gen)" version_1_10_163
+        AddSize 10485760
         SetOutPath $INSTDIR
         !insertmacro AbortIfUnsupportedVersion
         !insertmacro AbortIfUserRefuses
@@ -255,6 +256,7 @@ SectionGroup /e "Downgrade Steam version (v1.11.191) to" version
     SectionEnd
 
     Section /o "v1.10.984 (next-gen, update 2)" version_1_10_984
+        AddSize 1677722
         SetOutPath $INSTDIR
         !insertmacro AbortIfUnsupportedVersion
         !insertmacro AbortIfUserRefuses
@@ -348,6 +350,7 @@ SectionGroup /e "Downgrade Steam version (v1.11.191) to" version
     SectionEnd
 
     Section /o "v1.11.169 (anniversary, november patch)" version_1_11_169
+        AddSize 28672
         SetOutPath $INSTDIR
         !insertmacro AbortIfUnsupportedVersion
         !insertmacro AbortIfUserRefuses
