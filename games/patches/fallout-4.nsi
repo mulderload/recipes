@@ -7,8 +7,32 @@ Var /GLOBAL F4_Language
 Var /GLOBAL DLC_Automatron
 Var /GLOBAL DLC_Workshop
 
-SectionGroup /e "[Steam] Downgrade to v1.10.163 (oldgen)" slang
-    Section "Auto-detect language (doesn't work for chinese)" slang_auto
+!macro AbortIfUnsupportedVersion
+    NScurl::sha1 "$INSTDIR\Fallout4.exe"
+    Pop $0
+    ${If} $0 == "b4d944af1d97cde4786ad5bbeddc9c40f25e634c"
+        DetailPrint " // Supported version detected: v1.11.191 (december 2025)"
+    ${Else}
+        MessageBox MB_ICONEXCLAMATION "Unsupported Fallout 4 version detected (sha1: $0).$\r$\n$\r$\nThis downgrader only supports the Steam version v1.11.191 (december 2025).$\r$\n$\r$\nAborting."
+        Abort
+    ${EndIf}
+!macroend
+
+!macro AbortIfUserRefuses
+    MessageBox MB_YESNO|MB_ICONQUESTION "Please check auto-detection before continue.$\r$\n$\r$\nDetected language : $F4_Language$\r$\nAutomatron DLC: $DLC_Automatron$\r$\nWasteland Workshop DLC: $DLC_Workshop$\r$\n$\r$\nIs this correct?$\r$\n$\r$\n(other DLCs don't need downgrade so I don't look for them)" IDYES +2
+    Abort
+!macroend
+
+!macro DownloadXDelta
+    DetailPrint " // Downloading xdelta3"
+    !insertmacro Download https://github.com/jmacd/xdelta-gpl/releases/download/v3.0.11/xdelta3-3.0.11-x86_64.exe.zip "xdelta3.zip"
+    nsisunz::Unzip "xdelta3.zip" ".\"
+    Delete "xdelta3.zip"
+    Rename "xdelta3-3.0.11-x86_64.exe" "xdelta3.exe"
+!macroend
+
+SectionGroup "Language Detection" lang
+    Section "Auto-detect (doesn't work for chinese)" lang_auto
         StrCpy $F4_Language "en"
 
         IfFileExists "$INSTDIR\Data\Fallout4 - Voices_fr.ba2" 0 +2
@@ -36,28 +60,32 @@ SectionGroup /e "[Steam] Downgrade to v1.10.163 (oldgen)" slang
             StrCpy $F4_Language "ja"
     SectionEnd
 
-    Section /o "My game is in traditional chinese" slang_cn
+    Section /o "My game is in traditional chinese" lang_cn
         StrCpy $F4_Language "cn"
     SectionEnd
+SectionGroupEnd
 
+SectionGroup /e "Downgrade Steam version (v1.11.191) to" version
     Section
         StrCpy $DLC_Automatron "no"
         StrCpy $DLC_Workshop "no"
 
         IfFileExists "$INSTDIR\Data\DLCRobot.cdx" 0 +2
             StrCpy $DLC_Automatron "yes"
-        
+    
         IfFileExists "$INSTDIR\Data\DLCworkshop01.cdx" 0 +2
             StrCpy $DLC_Workshop "yes"
-
-        MessageBox MB_YESNO|MB_ICONQUESTION "Please check auto-detection before continue.$\r$\n$\r$\nDetected language : $F4_Language$\r$\nAutomatron DLC: $DLC_Automatron$\r$\nWasteland Workshop DLC: $DLC_Workshop$\r$\n$\r$\nIs this correct?" IDYES +2
-        Abort
-
+    SectionEnd
+    
+    Section "v1.10.163 (pre-next-gen)" version_1_10_163
         SetOutPath $INSTDIR
+        !insertmacro AbortIfUnsupportedVersion
+        !insertmacro AbortIfUserRefuses
+        !insertmacro DownloadXDelta
 
         DetailPrint " // Downloading downgrade 377161 (Base game)"
         !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_2025_12/377161.7z "377161.7z"
-        Nsis7z::ExtractWithDetails "377161.7z" "Extracting downgrade 377162 %s..."
+        Nsis7z::ExtractWithDetails "377161.7z" "Extracting downgrade 377161 %s..."
         Delete "377161.7z"
 
         DetailPrint " // Downloading downgrade 377162 (Base game)"
@@ -224,21 +252,189 @@ SectionGroup /e "[Steam] Downgrade to v1.10.163 (oldgen)" slang
             Nsis7z::ExtractWithDetails "435880.7z" "Extracting downgrade 435880 %s..."
             Delete "435880.7z"
         ${EndIf}
-
-        DetailPrint " // Downloading xdelta3"
-        !insertmacro Download https://github.com/jmacd/xdelta-gpl/releases/download/v3.0.11/xdelta3-3.0.11-x86_64.exe.zip "xdelta3.zip"
-        nsisunz::Unzip "xdelta3.zip" ".\"
-        Delete "xdelta3.zip"
-        Rename "xdelta3-3.0.11-x86_64.exe" "xdelta3.exe"
-        
-        DetailPrint " // Applying xdelta patches"
-        !insertmacro XDelta3_ApplyPatches "$INSTDIR"
-        Delete "xdelta3.exe"
     SectionEnd
 
+    Section /o "v1.10.984 (next-gen, update 2)" version_1_10_984
+        SetOutPath $INSTDIR
+        !insertmacro AbortIfUnsupportedVersion
+        !insertmacro AbortIfUserRefuses
+        !insertmacro DownloadXDelta
+    
+        DetailPrint " // Downloading downgrade 377161 (Base game)"
+        !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_1.11.191_to_1.10.984/377161.7z "377161.7z"
+        Nsis7z::ExtractWithDetails "377161.7z" "Extracting downgrade 377161 %s..."
+        Delete "377161.7z"
+
+        DetailPrint " // Downloading downgrade 377162 (Base game)"
+        !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_1.11.191_to_1.10.984/377162.7z "377162.7z"
+        Nsis7z::ExtractWithDetails "377162.7z" "Extracting downgrade 377162 %s..."
+        Delete "377162.7z"
+
+        DetailPrint " // Downloading downgrade 377163 (Base game)"
+        Delete "Data\Fallout4 - TexturesPatch.ba2"
+        !insertmacro DownloadRange https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_1.11.191_to_1.10.984/377163.7z "377163.7z" 4
+        Nsis7z::ExtractWithDetails "377163.7z.001" "Extracting downgrade 377163 %s..."
+        !insertmacro DeleteRange "377163.7z" 4
+
+        ${If} $F4_Language == "ja"
+            DetailPrint " // Downloading downgrade 393884 (Base game, Japanese)"
+            Rename "Data\Fallout4 - Voices_jp.ba2" "Data\Fallout4 - Voices.ba2"
+            Rename "Data\Fallout4 - Voices_rep_ja.ba2" "Data\Fallout4 - Voices_rep.ba2"
+            !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_1.11.191_to_1.10.984/393884.7z "393884.7z"
+            Nsis7z::ExtractWithDetails "393884.7z" "Extracting downgrade 393884 %s..."
+            Delete "393884.7z"
+        ${EndIf}
+
+        ${If} $DLC_Automatron == "yes"
+            ${If} $F4_Language == "ja"
+                DetailPrint " // Downloading downgrade 404091 (Automatron DLC, Japanese)"
+                !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_1.11.191_to_1.10.984/404091.7z "404091.7z"
+                Nsis7z::ExtractWithDetails "404091.7z" "Extracting downgrade 404091 %s..."
+                Delete "404091.7z"
+            ${ElseIf} $F4_Language == "en"
+                DetailPrint " // Downloading downgrade 435871 (Automatron DLC, English)"
+                !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_1.11.191_to_1.10.984/435871.7z "435871.7z"
+                Nsis7z::ExtractWithDetails "435871.7z" "Downgrading depot 435871 %s..."
+                Delete "435871.7z"
+            ${ElseIf} $F4_Language == "fr"
+                DetailPrint " // Downloading downgrade 435872 (Automatron DLC, French)"
+                !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_1.11.191_to_1.10.984/435872.7z "435872.7z"
+                Nsis7z::ExtractWithDetails "435872.7z" "Downgrading depot 435872 %s..."
+                Delete "435872.7z"
+            ${ElseIf} $F4_Language == "de"
+                DetailPrint " // Downloading downgrade 435873 (Automatron DLC, German)"
+                !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_1.11.191_to_1.10.984/435873.7z "435873.7z"
+                Nsis7z::ExtractWithDetails "435873.7z" "Downgrading depot 435873 %s..."
+                Delete "435873.7z"
+            ${ElseIf} $F4_Language == "it"
+                DetailPrint " // Downloading downgrade 435874 (Automatron DLC, Italian)"
+                !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_1.11.191_to_1.10.984/435874.7z "435874.7z"
+                Nsis7z::ExtractWithDetails "435874.7z" "Downgrading depot 435874 %s..."
+                Delete "435874.7z"
+            ${ElseIf} $F4_Language == "es"
+                DetailPrint " // Downloading downgrade 435875 (Automatron DLC, Spanish)"
+                !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_1.11.191_to_1.10.984/435875.7z "435875.7z"
+                Nsis7z::ExtractWithDetails "435875.7z" "Downgrading depot 435875 %s..."
+                Delete "435875.7z"
+            ${ElseIf} $F4_Language == "pl"
+                DetailPrint " // Downloading downgrade 435876 (Automatron DLC, Polish)"
+                !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_1.11.191_to_1.10.984/435876.7z "435876.7z"
+                Nsis7z::ExtractWithDetails "435876.7z" "Extracting downgrade 435876 %s..."
+                Delete "435876.7z"
+            ${ElseIf} $F4_Language == "ru"
+                DetailPrint " // Downloading downgrade 435877 (Automatron DLC, Russian)"
+                !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_1.11.191_to_1.10.984/435877.7z "435877.7z"
+                Nsis7z::ExtractWithDetails "435877.7z" "Extracting downgrade 435877 %s..."
+                Delete "435877.7z"
+            ${ElseIf} $F4_Language == "ptbr"
+                DetailPrint " // Downloading downgrade 435878 (Automatron DLC, Portuguese-Brazil)"
+                !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_1.11.191_to_1.10.984/435878.7z "435878.7z"
+                Nsis7z::ExtractWithDetails "435878.7z" "Extracting downgrade 435878 %s..."
+                Delete "435878.7z"
+            ${ElseIf} $F4_Language == "cn"
+                DetailPrint " // Downloading downgrade 435879 (Automatron DLC, Chinese-Traditional)"
+                !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_1.11.191_to_1.10.984/435879.7z "435879.7z"
+                Nsis7z::ExtractWithDetails "435879.7z" "Extracting downgrade 435879 %s..."
+                Delete "435879.7z"
+            ${EndIf}
+        ${EndIf}
+
+        ${If} $DLC_Workshop == "yes"
+            DetailPrint " // Downloading downgrade 435880 (Wasteland Workshop DLC)"
+            !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_1.11.191_to_1.10.984/435880.7z "435880.7z"
+            Nsis7z::ExtractWithDetails "435880.7z" "Extracting downgrade 435880 %s..."
+            Delete "435880.7z"
+        ${EndIf}
+    SectionEnd
+
+    Section /o "v1.11.169 (anniversary, november patch)" version_1_11_169
+        SetOutPath $INSTDIR
+        !insertmacro AbortIfUnsupportedVersion
+        !insertmacro AbortIfUserRefuses
+        !insertmacro DownloadXDelta
+    
+        DetailPrint " // Downloading downgrade 377162 (Base game)"
+        !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_1.11.191_to_1.11.169/377162.7z "377162.7z"
+        Nsis7z::ExtractWithDetails "377162.7z" "Extracting downgrade 377162 %s..."
+        Delete "377162.7z"
+        
+        DetailPrint " // Downloading downgrade 377163 (Base game)"
+        !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_1.11.191_to_1.11.169/377163.7z "377163.7z"
+        Nsis7z::ExtractWithDetails "377163.7z" "Extracting downgrade 377163 %s..."
+        Delete "377163.7z"
+
+        ${If} $DLC_Automatron == "yes"
+            ${If} $F4_Language == "ja"
+                DetailPrint " // Downloading downgrade 404091 (Automatron DLC, Japanese)"
+                !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_1.11.191_to_1.11.169/404091.7z "404091.7z"
+                Nsis7z::ExtractWithDetails "404091.7z" "Extracting downgrade 404091 %s..."
+                Delete "404091.7z"
+            ${ElseIf} $F4_Language == "en"
+                DetailPrint " // Downloading downgrade 435871 (Automatron DLC, English)"
+                !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_1.11.191_to_1.11.169/435871.7z "435871.7z"
+                Nsis7z::ExtractWithDetails "435871.7z" "Downgrading depot 435871 %s..."
+                Delete "435871.7z"
+            ${ElseIf} $F4_Language == "fr"
+                DetailPrint " // Downloading downgrade 435872 (Automatron DLC, French)"
+                !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_1.11.191_to_1.11.169/435872.7z "435872.7z"
+                Nsis7z::ExtractWithDetails "435872.7z" "Downgrading depot 435872 %s..."
+                Delete "435872.7z"
+            ${ElseIf} $F4_Language == "de"
+                DetailPrint " // Downloading downgrade 435873 (Automatron DLC, German)"
+                !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_1.11.191_to_1.11.169/435873.7z "435873.7z"
+                Nsis7z::ExtractWithDetails "435873.7z" "Downgrading depot 435873 %s..."
+                Delete "435873.7z"
+            ${ElseIf} $F4_Language == "it"
+                DetailPrint " // Downloading downgrade 435874 (Automatron DLC, Italian)"
+                !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_1.11.191_to_1.11.169/435874.7z "435874.7z"
+                Nsis7z::ExtractWithDetails "435874.7z" "Downgrading depot 435874 %s..."
+                Delete "435874.7z"
+            ${ElseIf} $F4_Language == "es"
+                DetailPrint " // Downloading downgrade 435875 (Automatron DLC, Spanish)"
+                !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_1.11.191_to_1.11.169/435875.7z "435875.7z"
+                Nsis7z::ExtractWithDetails "435875.7z" "Downgrading depot 435875 %s..."
+                Delete "435875.7z"
+            ${ElseIf} $F4_Language == "pl"
+                DetailPrint " // Downloading downgrade 435876 (Automatron DLC, Polish)"
+                !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_1.11.191_to_1.11.169/435876.7z "435876.7z"
+                Nsis7z::ExtractWithDetails "435876.7z" "Extracting downgrade 435876 %s..."
+                Delete "435876.7z"
+            ${ElseIf} $F4_Language == "ru"
+                DetailPrint " // Downloading downgrade 435877 (Automatron DLC, Russian)"
+                !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_1.11.191_to_1.11.169/435877.7z "435877.7z"
+                Nsis7z::ExtractWithDetails "435877.7z" "Extracting downgrade 435877 %s..."
+                Delete "435877.7z"
+            ${ElseIf} $F4_Language == "ptbr"
+                DetailPrint " // Downloading downgrade 435878 (Automatron DLC, Portuguese-Brazil)"
+                !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_1.11.191_to_1.11.169/435878.7z "435878.7z"
+                Nsis7z::ExtractWithDetails "435878.7z" "Extracting downgrade 435878 %s..."
+                Delete "435878.7z"
+            ${ElseIf} $F4_Language == "cn"
+                DetailPrint " // Downloading downgrade 435879 (Automatron DLC, Chinese-Traditional)"
+                !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_1.11.191_to_1.11.169/435879.7z "435879.7z"
+                Nsis7z::ExtractWithDetails "435879.7z" "Extracting downgrade 435879 %s..."
+                Delete "435879.7z"
+            ${EndIf}
+        ${EndIf}
+
+        ${If} $DLC_Workshop == "yes"
+            DetailPrint " // Downloading downgrade 435880 (Wasteland Workshop DLC)"
+            !insertmacro Download https://cdn2.mulderload.eu/g/fallout-4/steam_downgrade_1.11.191_to_1.11.169/435880.7z "435880.7z"
+            Nsis7z::ExtractWithDetails "435880.7z" "Extracting downgrade 435880 %s..."
+            Delete "435880.7z"
+        ${EndIf}
+    SectionEnd
+
+    Section
+        SetOutPath $INSTDIR
+        DetailPrint " // Applying xdelta patches"
+        !insertmacro XDelta3_ApplyPatches "$INSTDIR"
+        DetailPrint " // Remove xdelta3"
+        Delete "xdelta3.exe"
+    SectionEnd
 SectionGroupEnd
 
-Section /o "[Steam] Block future update"
+Section /o "Block future Steam update"
     SetOutPath $INSTDIR\..\..
     DetailPrint " // Block future update (appmanifest_377160.acf)"
     SetFileAttributes "appmanifest_377160.acf" READONLY
@@ -248,14 +444,25 @@ Function .onInit
     StrCpy $SELECT_FILENAME "Fallout4.exe"
     StrCpy $SELECT_DEFAULT_FOLDER "C:\Program Files (x86)\Steam\steamapps\common\Fallout 4"
     StrCpy $SELECT_RELATIVE_INSTDIR ""
-    StrCpy $1 ${slang_auto} ; Radio Button
+    StrCpy $1 ${lang_auto} ; Radio Button
+    StrCpy $2 ${version_1_10_163} ; Radio Button
 FunctionEnd
 
 Function .onSelChange
-    ${If} ${SectionIsSelected} ${slang}
+    ${If} ${SectionIsSelected} ${lang}
         !insertmacro StartRadioButtons $1
-            !insertmacro RadioButton ${slang_auto}
-            !insertmacro RadioButton ${slang_cn}
+            !insertmacro RadioButton ${lang_auto}
+            !insertmacro RadioButton ${lang_cn}
+        !insertmacro EndRadioButtons
+    ${EndIf}
+
+    ${If} ${SectionIsSelected} ${version}
+        !insertmacro UnSelectSection ${version}
+    ${Else}
+        !insertmacro StartRadioButtons $2
+            !insertmacro RadioButton ${version_1_10_163}
+            !insertmacro RadioButton ${version_1_10_984}
+            !insertmacro RadioButton ${version_1_11_169}
         !insertmacro EndRadioButtons
     ${EndIf}
 FunctionEnd
