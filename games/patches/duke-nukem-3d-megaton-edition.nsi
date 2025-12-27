@@ -36,12 +36,12 @@ SectionGroup /e "HD Textures" fov
     SectionEnd
 SectionGroupEnd
 
-SectionGroup /e "MulderLauncher (latest)"
+SectionGroup /e "MulderLauncher (v25.09.21.2)"
     Section
         SectionIn RO
         AddSize 1024
         SetOutPath $INSTDIR\bin
-        !insertmacro Download https://github.com/mulderload/launcher/releases/latest/download/MulderLauncher.exe "MulderLauncher.exe"
+        !insertmacro Download https://www.mediafire.com/file_premium/uooghk2lunme6xb/MulderLauncher-25.09.21.2.exe/file "MulderLauncher.exe"
         !insertmacro Download https://raw.githubusercontent.com/mulderload/recipes/refs/heads/main/resources/duke-nukem-3d-megaton-edition/MulderLauncher.config.json "MulderLauncher.config.json"
         !insertmacro Download https://raw.githubusercontent.com/mulderload/recipes/refs/heads/main/resources/duke-nukem-3d-megaton-edition/MulderLauncher.save.json "MulderLauncher.save.json"
         Rename "duke3d.exe" "duke3d_o.exe"
