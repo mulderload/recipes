@@ -1,6 +1,6 @@
-!define MUI_WELCOMEPAGE_TEXT "Welcome to this NSIS installer from the MulderLoad project.$\r$\n$\r$\nThis installer includes$\r$\n- eduke32 (x64) for improved rendering$\r$\n- High Resolution Packs (including nwinter/vacation)$\r$\n- AI Upscaled Textures$\r$\n- MulderLauncher for config/exe wrap$\r$\n$\r$\nEnjoy and chew bubble gum !"
-!define MUI_FINISHPAGE_RUN "$INSTDIR\bin\MulderLauncher.exe"
-!define MUI_FINISHPAGE_RUN_TEXT "Configure MulderLauncher"
+!define MUI_WELCOMEPAGE_TEXT "Welcome to this NSIS installer from the MulderLoad project.$\r$\n$\r$\nThis installer includes$\r$\n- eduke32 (x64) for improved rendering$\r$\n- High Resolution Packs (including nwinter/vacation)$\r$\n- AI Upscaled Textures$\r$\n- MulderConfig for game/addons configurations$\r$\n$\r$\nEnjoy and chew bubble gum !"
+!define MUI_FINISHPAGE_RUN "$INSTDIR\bin\MulderConfig.exe"
+!define MUI_FINISHPAGE_RUN_TEXT "Run MulderConfig"
 !include "..\..\templates\select_exe.nsh"
 
 Name "Duke Nukem 3D: Megaton Edition [PATCHS]"
@@ -36,16 +36,15 @@ SectionGroup /e "HD Textures" fov
     SectionEnd
 SectionGroupEnd
 
-SectionGroup /e "MulderLauncher (v25.09.21.2)"
+SectionGroup /e "MulderConfig (latest)"
     Section
         SectionIn RO
         AddSize 1024
         SetOutPath $INSTDIR\bin
-        !insertmacro Download https://www.mediafire.com/file_premium/uooghk2lunme6xb/MulderLauncher-25.09.21.2.exe/file "MulderLauncher.exe"
-        !insertmacro Download https://raw.githubusercontent.com/mulderload/recipes/refs/heads/main/resources/duke-nukem-3d-megaton-edition/MulderLauncher.config.json "MulderLauncher.config.json"
-        !insertmacro Download https://raw.githubusercontent.com/mulderload/recipes/refs/heads/main/resources/duke-nukem-3d-megaton-edition/MulderLauncher.save.json "MulderLauncher.save.json"
-        Rename "duke3d.exe" "duke3d_o.exe"
-        CopyFiles "MulderLauncher.exe" "duke3d.exe"
+        !insertmacro Download https://github.com/mulderload/MulderConfig/releases/latest/download/MulderConfig.exe "MulderConfig.exe"
+        !insertmacro Download https://raw.githubusercontent.com/mulderload/recipes/refs/heads/main/resources/duke-nukem-3d-megaton-edition/MulderConfig.json "MulderConfig.json"
+        !insertmacro Download https://raw.githubusercontent.com/mulderload/recipes/refs/heads/main/resources/duke-nukem-3d-megaton-edition/MulderConfig.save.json "MulderConfig.save.json"
+        ExecWait '"$INSTDIR\bin\MulderConfig.exe" -apply' $0
     SectionEnd
 
     Section /o "Microsoft .NET Desktop Runtime 8.0.22 (x64)"
@@ -58,11 +57,6 @@ SectionGroup /e "MulderLauncher (v25.09.21.2)"
         Delete "windowsdesktop-runtime-win-x64.exe"
     SectionEnd
 SectionGroupEnd
-
-Section "Disable CrashSender (recommended)"
-    SetOutPath $INSTDIR\bin
-    Rename "CrashSender1402.exe" "CrashSender1402_o.exe"
-SectionEnd
 
 Function .onInit
     StrCpy $SELECT_FILENAME "duke3d.exe"

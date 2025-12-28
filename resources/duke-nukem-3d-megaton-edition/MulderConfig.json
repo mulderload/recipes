@@ -1,0 +1,180 @@
+{
+  "game": {
+    "title": "Duke Nukem 3D: Megaton Edition",
+    "originalExe": "duke3d.exe"
+  },
+  "addons": [
+    { "title": "Duke It Out In D.C.", "steamId": 1 },
+    { "title": "Duke: Nuclear Winter", "steamId": 2 },
+    { "title": "Duke Caribbean: Life's A Beach", "steamId": 3 }
+  ],
+  "optionGroups": [
+    {
+      "name": "Executable",
+      "type": "radioGroup",
+      "radios": [
+        { "value": "eDuke32 (better quality)" },
+        { "value": "Steam (achievements && multiplayers)" }
+      ]
+    },
+    {
+      "name": "Vanilla Textures",
+      "type": "checkboxGroup",
+      "checkboxes": [
+        { "value":"AI Upscaled Textures", "disabledWhen": [{ "Executable": "Steam (achievements && multiplayers)" }] }
+      ]
+    },
+    {
+      "name": "High Resolution Pack",
+      "type": "radioGroup",
+      "radios": [
+        { "value": "Disabled" },
+        { "value": "Enabled (classic monsters)" },
+        { "value": "Enabled (modern monsters)", "disabledWhen": [{ "Title": "Duke Caribbean: Life's A Beach" }, { "Title": "Duke: Nuclear Winter" }] }
+      ]
+    },
+    {
+      "name": "Misc",
+      "type": "checkboxGroup",
+      "checkboxes": [
+        { "value": "Disable CrashSender" },
+        { "value": "Show eDuke32 config", "disabledWhen": [{ "!Executable": "eDuke32 (better quality)" }] },
+        { "value": "Skip intro videos" }
+      ]
+    }
+  ],
+  "actions": {
+    "launch": [
+      {
+        "when": [ { "Executable": "Steam (achievements && multiplayers)" } ],
+        "exec": { "name": "..\\bin\\duke3d_o.exe", "workDir": "..\\gameroot" }
+      },
+      {
+        "when": [ { "Executable": "eDuke32 (better quality)" } ],
+        "exec": { "name": "..\\eduke32\\eduke32.exe", "workDir": "..\\gameroot" }
+      },
+
+
+      {
+        "when": [ { "Title": "Duke Nukem 3D: Megaton Edition", "Executable": "eDuke32 (better quality)" } ],
+        "args": [ "-gamegrp duke3d.grp" ]
+      },
+      {
+        "when": [ { "Title": "Duke It Out In D.C." } ],
+        "args": [ "-addon 1" ]
+      },
+      {
+        "when": [ { "Title": "Duke It Out In D.C.", "Executable": "eDuke32 (better quality)" } ],
+        "args": [ "-j addons\\dc", "-gamegrp dukedc.grp" ]
+      },
+      {
+        "when": [ { "Title": "Duke: Nuclear Winter" } ],
+        "args": [ "-addon 2" ]
+      },
+      {
+        "when": [ { "Title": "Duke: Nuclear Winter", "Executable": "eDuke32 (better quality)" } ],
+        "args": [ "-j addons\\nw", "-gamegrp nwinter.grp" ]
+      },
+      {
+        "when": [ { "Title": "Duke Caribbean: Life's A Beach" } ],
+        "args": [ "-addon 3" ]
+      },
+      {
+        "when": [ { "Title": "Duke Caribbean: Life's A Beach", "Executable": "eDuke32 (better quality)" } ],
+        "args": [ "-j addons\\vacation", "-gamegrp vacation.grp" ]
+      },
+
+
+      { 
+        "when": [ { "Vanilla Textures": "AI Upscaled Textures" } ],
+        "args": [ "-gdukeupscale.zip", "-mh dukeupscale.def" ]
+      },
+      { 
+        "when": [ { "Vanilla Textures": "AI Upscaled Textures", "Title": "Duke: Nuclear Winter" } ],
+        "args": [ "-mh nwupscale.def" ]
+      },
+      { 
+        "when": [ { "Vanilla Textures": "AI Upscaled Textures", "Title": "Duke Caribbean: Life's A Beach" } ],
+        "args": [ "-mh vacaupscale.def" ]
+      },
+
+
+      {
+        "when": [ { "*High Resolution Pack": "Enabled" } ],
+        "args": [ "-gduke3d_hrp.zip" ]
+      },
+      {
+        "when": [ { "*High Resolution Pack": "Enabled", "Title": "Duke It Out In D.C." } ],
+        "args": [ "-gdukedc_hrp.zip" ]
+      },
+      { 
+        "when": [ { "*High Resolution Pack": "Enabled", "Title": "Duke: Nuclear Winter" } ],
+        "args": [ "-gnwinter_hrp.zip" ]
+      },
+      {
+        "when": [ { "*High Resolution Pack": "Enabled", "Title": "Duke Caribbean: Life's A Beach" } ],
+        "args": [ "-gvacation_hrp.zip" ]
+      },
+      {
+        "when": [ { "*High Resolution Pack": "Enabled", "Executable": "Steam (achievements && multiplayers)" } ],
+        "args": [ "-gduke3d_megaton_hrp_override_custom.zip", "-gclassic_weapons.zip" ]
+      },
+      {
+        "when": [ { "High Resolution Pack": "Enabled (classic monsters)" } ],
+        "args": [ "-gclassic_monsters.zip" ]
+      },
+      {
+        "when": [ { "High Resolution Pack": "Enabled (classic monsters)", "Title": "Duke: Nuclear Winter", "Executable": "Steam (achievements && multiplayers)" } ],
+        "args": ["-hnwinter_hrp_steam.def"]
+      },
+      {
+        "when": [ { "High Resolution Pack": "Enabled (classic monsters)", "Title": "Duke: Nuclear Winter", "Executable": "eDuke32 (better quality)" } ],
+        "args": ["-mh nwinter_hrp.def"]
+      },
+      {
+        "when": [ { "High Resolution Pack": "Enabled (classic monsters)", "Title": "Duke Caribbean: Life's A Beach", "Executable": "Steam (achievements && multiplayers)" } ],
+        "args": ["-hvacation_hrp_steam.def"]
+      },
+      {
+        "when": [  {"High Resolution Pack": "Enabled (classic monsters)", "Title": "Duke Caribbean: Life's A Beach", "Executable": "eDuke32 (better quality)" } ],
+        "args": ["-mh vacation_hrp.def"]
+      },
+
+
+      {
+        "when": [{"Executable": "eDuke32 (better quality)", "Misc":"Show eDuke32 config"}],
+        "args": ["-setup"]
+      },
+      {
+        "when": [{"Executable": "eDuke32 (better quality)", "Misc":"Skip intro videos"}],
+        "args": ["-quick"]
+      }
+    ],
+    "operations": [
+      {
+        "when": [ { "Misc":"Skip intro videos" } ],
+        "operation": "rename",
+        "source": "..\\gameroot\\video",
+        "target": "..\\gameroot\\_video.bak"
+      },
+      {
+        "when": [ {"!Misc":"Skip intro videos" } ],
+        "operation": "rename",
+        "source": "..\\gameroot\\_video.bak",
+        "target": "..\\gameroot\\video"
+      },
+      {
+        "when": [ { "Misc":"Disable CrashSender" } ],
+        "operation": "rename",
+        "source": "..\\bin\\CrashSender1402.exe",
+        "target": "..\\bin\\_CrashSender1402.exe.bak"
+      },
+      {
+        "when": [ {"!Misc":"Disable CrashSender" } ],
+        "operation": "rename",
+        "source": "..\\bin\\_CrashSender1402.exe.bak",
+        "target": "..\\bin\\CrashSender1402.exe"
+      }
+    ]
+  }
+}

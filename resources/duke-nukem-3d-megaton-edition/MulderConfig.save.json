@@ -1,11 +1,12 @@
 {
-  "Duke Nukem 3D: Atomic Edition": {
+  "Duke Nukem 3D: Megaton Edition": {
     "Executable": "eDuke32 (better quality)",
     "Vanilla Textures": [
       "AI Upscaled Textures"
     ],
     "High Resolution Pack": "Enabled (modern monsters)",
     "Misc": [
+      "Disable CrashSender",
       "Skip intro videos"
     ]
   },
@@ -16,6 +17,7 @@
     ],
     "High Resolution Pack": "Enabled (modern monsters)",
     "Misc": [
+      "Disable CrashSender",
       "Skip intro videos"
     ]
   },
@@ -26,6 +28,7 @@
     ],
     "High Resolution Pack": "Enabled (classic monsters)",
     "Misc": [
+      "Disable CrashSender",
       "Skip intro videos"
     ]
   },
@@ -36,6 +39,7 @@
     ],
     "High Resolution Pack": "Enabled (classic monsters)",
     "Misc": [
+      "Disable CrashSender",
       "Skip intro videos"
     ]
   }
