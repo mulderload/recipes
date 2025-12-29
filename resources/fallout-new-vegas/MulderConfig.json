@@ -1,0 +1,262 @@
+{
+  "game": {
+    "title": "Fallout: New Vegas",
+    "originalExe": "FalloutNV.exe"
+  },
+  "optionGroups": [
+    {
+      "name": "Renderer",
+      "type": "radioGroup",
+      "radios": [
+        { "value": "DX9" },
+        { "value": "DXVK" }
+      ]
+    },
+    {
+      "name": "Resolution",
+      "type": "radioGroup",
+      "radios": [
+        { "value": "1920x1080 (16/9)" },
+        { "value": "2560x1440 (16/9)" },
+        { "value": "3840x2160 (16/9)" },
+        { "value": "2560x1080 (21/9)" },
+        { "value": "3440x1440 (21/9)" },
+        { "value": "5120x2160 (21/9)" },
+        { "value": "3840x1080 (32/9)" },
+        { "value": "5120x1440 (32/9)" },
+        { "value": "7680x2160 (32/9)" }
+      ]
+    },
+    {
+      "name": "FOV Modifier",
+      "type": "radioGroup",
+      "radios": [
+        { "value": "lower (normal - 10)" },
+        { "value": "normal (automatic for selected aspect ratio)" },
+        { "value": "larger (normal + 10)" }
+      ]
+    },
+    {
+      "name": "Toggleable Mods",
+      "type": "checkboxGroup",
+      "checkboxes": [
+        { "value": "Enable NVHR (New Vegas Heap Replacer)", "disabledWhen": [ { "Renderer": "DXVK" } ]},
+        { "value": "Enable NVSE + dependant mods" }
+      ]
+    },
+    {
+      "name": "Misc",
+      "type": "checkboxGroup",
+      "checkboxes": [
+        { "value": "Disable AVX2 from NVHR", "disabledWhen": [ { "!Toggleable Mods": "Enable NVHR (New Vegas Heap Replacer)" } ] },
+        { "value": "Disable VSync" }
+      ]
+    }
+  ],
+  "actions": {
+    "operations": [
+      {
+        "operation": "removereadonly",
+        "files": ["%USERPROFILE%\\Documents\\My Games\\FalloutNV\\Fallout.ini"]
+      },
+      {
+        "when": [ { "Renderer": "DXVK" } ],
+        "operation": "rename",
+        "source": "_dxvk.dll.bak",
+        "target": "d3d9.dll"
+      },
+      {
+        "when": [ { "!Renderer": "DXVK" } ],
+        "operation": "rename",
+        "source": "d3d9.dll",
+        "target": "_dxvk.dll.bak"
+      },
+      {
+        "when": [ { "Toggleable Mods": "Enable NVHR (New Vegas Heap Replacer)" } ],
+        "operation": "rename",
+        "source": "_nvhr.dll.bak",
+        "target": "d3dx9_38.dll"
+      },
+      {
+        "when": [ { "!Toggleable Mods": "Enable NVHR (New Vegas Heap Replacer)" } ],
+        "operation": "rename",
+        "source": "d3dx9_38.dll",
+        "target": "_nvhr.dll.bak"
+      },
+      {
+        "when": [ { "Toggleable Mods": "Enable NVSE + dependant mods" } ],
+        "operation": "rename",
+        "source": "_nvse_steam_loader.dll.bak",
+        "target": "nvse_steam_loader.dll"
+      },
+      {
+        "when": [ { "!Toggleable Mods": "Enable NVSE + dependant mods" } ],
+        "operation": "rename",
+        "source": "nvse_steam_loader.dll",
+        "target": "_nvse_steam_loader.dll.bak"
+      },
+      {
+        "when": [ { "Misc": "Disable AVX2 from NVHR" } ],
+        "operation": "rename",
+        "source": "Data\\NVHR\\nvhr_avx2.dll",
+        "target": "Data\\NVHR\\_nvhr_avx2.dll.bak"
+      },
+      {
+        "when": [ { "Misc": "Disable AVX2 from NVHR" } ],
+        "operation": "rename",
+        "source": "Data\\NVHR\\pdbs\\nvhr_avx2.pdb",
+        "target": "Data\\NVHR\\pdbs\\_nvhr_avx2.pdb.bak"
+      },
+      {
+        "when": [ { "!Misc": "Disable AVX2 from NVHR" } ],
+        "operation": "rename",
+        "source": "Data\\NVHR\\_nvhr_avx2.dll.bak",
+        "target": "Data\\NVHR\\nvhr_avx2.dll"
+      },
+      {
+        "when": [ { "!Misc": "Disable AVX2 from NVHR" } ],
+        "operation": "rename",
+        "source": "Data\\NVHR\\pdbs\\_nvhr_avx2.pdb.bak",
+        "target": "Data\\NVHR\\pdbs\\nvhr_avx2.pdb"
+      },
+      {
+        "when": [ { "*Resolution": "1920x" } ],
+        "operation": "replaceLine",
+        "files": ["%USERPROFILE%\\Documents\\My Games\\FalloutNV\\FalloutPrefs.ini"],
+        "pattern": "^iSize W=.*$",
+        "replacement": "iSize W=1920"
+      },
+      {
+        "when": [ { "*Resolution": "2560x" } ],
+        "operation": "replaceLine",
+        "files": ["%USERPROFILE%\\Documents\\My Games\\FalloutNV\\FalloutPrefs.ini"],
+        "pattern": "^iSize W=.*$",
+        "replacement": "iSize W=2560"
+      },
+      {
+        "when": [ { "*Resolution": "3440x" } ],
+        "operation": "replaceLine",
+        "files": ["%USERPROFILE%\\Documents\\My Games\\FalloutNV\\FalloutPrefs.ini"],
+        "pattern": "^iSize W=.*$",
+        "replacement": "iSize W=3440"
+      },
+      {
+        "when": [ { "*Resolution": "3840x" } ],
+        "operation": "replaceLine",
+        "files": ["%USERPROFILE%\\Documents\\My Games\\FalloutNV\\FalloutPrefs.ini"],
+        "pattern": "^iSize W=.*$",
+        "replacement": "iSize W=3840"
+      },
+      {
+        "when": [ { "*Resolution": "5120x" } ],
+        "operation": "replaceLine",
+        "files": ["%USERPROFILE%\\Documents\\My Games\\FalloutNV\\FalloutPrefs.ini"],
+        "pattern": "^iSize W=.*$",
+        "replacement": "iSize W=5120"
+      },
+      {
+        "when": [ { "*Resolution": "7680x" } ],
+        "operation": "replaceLine",
+        "files": ["%USERPROFILE%\\Documents\\My Games\\FalloutNV\\FalloutPrefs.ini"],
+        "pattern": "^iSize W=.*$",
+        "replacement": "iSize W=7680"
+      },
+      {
+        "when": [ { "*Resolution": "x1080" } ],
+        "operation": "replaceLine",
+        "files": ["%USERPROFILE%\\Documents\\My Games\\FalloutNV\\FalloutPrefs.ini"],
+        "pattern": "^iSize H=.*$",
+        "replacement": "iSize H=1080"
+      },
+      {
+        "when": [ { "*Resolution": "x1440" } ],
+        "operation": "replaceLine",
+        "files": ["%USERPROFILE%\\Documents\\My Games\\FalloutNV\\FalloutPrefs.ini"],
+        "pattern": "^iSize H=.*$",
+        "replacement": "iSize H=1440"
+      },
+      {
+        "when": [ { "*Resolution": "x2160" } ],
+        "operation": "replaceLine",
+        "files": ["%USERPROFILE%\\Documents\\My Games\\FalloutNV\\FalloutPrefs.ini"],
+        "pattern": "^iSize H=.*$",
+        "replacement": "iSize H=2160"
+      },
+      {
+        "operation": "removeLine",
+        "files": ["Fallout_default.ini", "%USERPROFILE%\\Documents\\My Games\\FalloutNV\\Fallout.ini"],
+        "pattern": "^fDefaultWorldFOV=.*$"
+      },
+      {
+        "when": [ { "*Resolution": "(16/9)", "FOV Modifier": "lower (normal - 10)" } ],
+        "operation": "replaceLine",
+        "files": ["Fallout_default.ini", "%USERPROFILE%\\Documents\\My Games\\FalloutNV\\Fallout.ini"],
+        "pattern": "^fDefaultFOV=.*$",
+        "replacement": "fDefaultFOV=95.0000\nfDefaultWorldFOV=95.0000"
+      },
+      {
+        "when": [ { "*Resolution": "(16/9)", "FOV Modifier": "normal (automatic for selected aspect ratio)" } ],
+        "operation": "replaceLine",
+        "files": ["Fallout_default.ini", "%USERPROFILE%\\Documents\\My Games\\FalloutNV\\Fallout.ini"],
+        "pattern": "^fDefaultFOV=.*$",
+        "replacement": "fDefaultFOV=105.0000\nfDefaultWorldFOV=105.0000"
+      },
+      {
+        "when": [ { "*Resolution": "(16/9)", "FOV Modifier": "larger (normal + 10)" } ],
+        "operation": "replaceLine",
+        "files": ["Fallout_default.ini", "%USERPROFILE%\\Documents\\My Games\\FalloutNV\\Fallout.ini"],
+        "pattern": "^fDefaultFOV=.*$",
+        "replacement": "fDefaultFOV=115.0000\nfDefaultWorldFOV=115.0000"
+      },
+      {
+        "when": [ { "*Resolution": "(21/9)", "FOV Modifier": "lower (normal - 10)" } ],
+        "operation": "replaceLine",
+        "files": ["Fallout_default.ini", "%USERPROFILE%\\Documents\\My Games\\FalloutNV\\Fallout.ini"],
+        "pattern": "^fDefaultFOV=.*$",
+        "replacement": "fDefaultFOV=70.0000\nfDefaultWorldFOV=70.0000"
+      },
+      {
+        "when": [ { "*Resolution": "(21/9)", "FOV Modifier": "normal (automatic for selected aspect ratio)" } ],
+        "operation": "replaceLine",
+        "files": ["Fallout_default.ini", "%USERPROFILE%\\Documents\\My Games\\FalloutNV\\Fallout.ini"],
+        "pattern": "^fDefaultFOV=.*$",
+        "replacement": "fDefaultFOV=80.0000\nfDefaultWorldFOV=80.0000"
+      },
+      {
+        "when": [ { "*Resolution": "(21/9)", "FOV Modifier": "larger (normal + 10)" } ],
+        "operation": "replaceLine",
+        "files": ["Fallout_default.ini", "%USERPROFILE%\\Documents\\My Games\\FalloutNV\\Fallout.ini"],
+        "pattern": "^fDefaultFOV=.*$",
+        "replacement": "fDefaultFOV=90.0000\nfDefaultWorldFOV=90.0000"
+      },
+      {
+        "when": [ { "*Resolution": "(32/9)", "FOV Modifier": "lower (normal - 10)" } ],
+        "operation": "replaceLine",
+        "files": ["Fallout_default.ini", "%USERPROFILE%\\Documents\\My Games\\FalloutNV\\Fallout.ini"],
+        "pattern": "^fDefaultFOV=.*$",
+        "replacement": "fDefaultFOV=60.0000\nfDefaultWorldFOV=60.0000"
+      },
+      {
+        "when": [ { "*Resolution": "(32/9)", "FOV Modifier": "normal (automatic for selected aspect ratio)" } ],
+        "operation": "replaceLine",
+        "files": ["Fallout_default.ini", "%USERPROFILE%\\Documents\\My Games\\FalloutNV\\Fallout.ini"],
+        "pattern": "^fDefaultFOV=.*$",
+        "replacement": "fDefaultFOV=70.0000\nfDefaultWorldFOV=70.0000"
+      },
+      {
+        "when": [ { "*Resolution": "(32/9)", "FOV Modifier": "larger (normal + 10)" } ],
+        "operation": "replaceLine",
+        "files": ["Fallout_default.ini", "%USERPROFILE%\\Documents\\My Games\\FalloutNV\\Fallout.ini"],
+        "pattern": "^fDefaultFOV=.*$",
+        "replacement": "fDefaultFOV=80.0000\nfDefaultWorldFOV=80.0000"
+      },
+      {
+        "when": [ { "Misc": "Disable VSync" } ],
+        "operation": "replaceLine",
+        "files": ["%USERPROFILE%\\Documents\\My Games\\FalloutNV\\Fallout.ini"],
+        "pattern": "^iPresentInterval=.*$",
+        "replacement": "iPresentInterval=0"
+      }
+    ]
+  }
+}

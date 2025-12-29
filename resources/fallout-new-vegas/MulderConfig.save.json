@@ -1,0 +1,12 @@
+{
+  "Fallout: New Vegas": {
+    "Renderer": "DX9",
+    "Resolution": "1920x1080 (16/9)",
+    "FOV Modifier": "normal (automatic for selected aspect ratio)",
+    "Toggleable Mods": [
+      "Enable NVHR (New Vegas Heap Replacer)",
+      "Enable NVSE + dependant mods"
+    ],
+    "Misc": []
+  }
+}
