@@ -80,16 +80,6 @@ SectionGroup /e "Downgrade Steam version (v1.11.191) to" version
         IfFileExists "$INSTDIR\Data\DLCworkshop01.cdx" 0 +2
             StrCpy $DLC_Workshop "yes"
     SectionEnd
-    
-    Section /o "1.10.163 (pre-next-gen) - full downgrader only" version_1_10_163
-        SectionIn RO
-        MessageBox MB_OK "Unavailable on the lite downgrader. Please use the full downgrader instead."
-    SectionEnd
-
-    Section /o "1.10.984 (next-gen up2) - full downgrader only" version_1_10_984
-        SectionIn RO
-        MessageBox MB_OK "Unavailable on the lite downgrader. Please use the full downgrader instead."
-    SectionEnd
 
     Section "1.11.169 (anniversary, november patch)" version_1_11_169
         AddSize 28672
