@@ -1,5 +1,25 @@
 !define MUI_WELCOMEPAGE_TEXT "Welcome to the LITE edition of the Mulderland's Universal Downgrader, specially built for Nexusmods.$\r$\n$\r$\nIt can downgrade your Steam installation of Fallout 4 from v1.11.191 to v1.11.169. It is compatible with every editions (base game, GOTY, or in-between) and every languages.$\r$\n$\r$\nIf you wish to downgrade to an EARLIER version (v1.10.163 or v1.10.984), you can find the FULL version on my website for free.$\r$\n$\r$\nWARNING (for chineses): if your Fallout 4 is in chinese, auto language detection will sadly not work for you. So, you will have to check Chinese in the components page."
-!include "..\..\templates\select_exe.nsh"
+
+; !include "..\..\templates\select_exe.nsh"
+!include MUI2.nsh
+!define MUI_ICON "..\..\templates\icon.ico"
+!include "..\..\templates\includes\download.nsh"
+!include "..\..\templates\includes\abort_if_folder_not_empty.nsh"
+!include "..\..\templates\includes\move_file_folder.nsh"
+!include "..\..\templates\includes\replace_in_file.nsh"
+!include "..\..\templates\includes\select_exe.nsh"
+!define MUI_COMPONENTSPAGE_NODESC
+; !include "..\..\templates\includes\wording.nsh"
+!define MUI_WELCOMEPAGE_TITLE "Mulderland's Universal Downgrader LITE (special build for NexusMods)"
+!define MUI_FINISHPAGE_TITLE "Downgrade complete !"
+!define MUI_FINISHPAGE_TEXT "Thank you for using this downgrader. Happy Modding!"
+!insertmacro MUI_PAGE_WELCOME
+Page Custom CUSTOM_PAGE_SELECT_FILE
+!insertmacro MUI_PAGE_COMPONENTS
+!insertmacro MUI_PAGE_INSTFILES
+!insertmacro MUI_PAGE_FINISH
+RequestExecutionLevel none
+
 !include "..\..\templates\includes\xdelta3.nsh"
 Name "Fallout 4 [Steam Downgrader LITE]"
 
