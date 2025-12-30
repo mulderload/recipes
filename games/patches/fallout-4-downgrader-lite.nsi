@@ -25,8 +25,7 @@ Var /GLOBAL DLC_Workshop
 
 !macro CopyXDelta
     DetailPrint " // Copying xdelta3"
-    nsisunz::Unzip "$EXEDIR\xdelta3-3.0.11-x86_64.exe.zip" "$INSTDIR\"
-    Rename "$INSTDIR\xdelta3-3.0.11-x86_64.exe" "$INSTDIR\xdelta3.exe"
+    CopyFiles "$EXEDIR\xdelta3-3.0.11-x86_64.exe" "$INSTDIR\xdelta3.exe"
 !macroend
 
 !macro AbortIfInstallDirectory
@@ -100,49 +99,49 @@ SectionGroup /e "Downgrade Steam version (v1.11.191) to" version
         !insertmacro AbortIfUserRefuses
         !insertmacro CopyXDelta
     
-        DetailPrint " // Downloading downgrade 377162 (Base game)"
-        Nsis7z::ExtractWithDetails "$EXEDIR\377162.7z" "Extracting downgrade 377162 %s..."
+        DetailPrint " // Copying downgrade 377162 (Base game)"
+        CopyFiles "$EXEDIR\377162\*" "$INSTDIR\"
         
-        DetailPrint " // Downloading downgrade 377163 (Base game)"
-        Nsis7z::ExtractWithDetails "$EXEDIR\377163.7z" "Extracting downgrade 377163 %s..."
+        DetailPrint " // Copying downgrade 377163 (Base game)"
+        CopyFiles "$EXEDIR\377163\*" "$INSTDIR\"
 
         ${If} $DLC_Automatron == "yes"
             ${If} $F4_Language == "ja"
-                DetailPrint " // Downloading downgrade 404091 (Automatron DLC, Japanese)"
-                Nsis7z::ExtractWithDetails "$EXEDIR\404091.7z" "Extracting downgrade 404091 %s..."
+                DetailPrint " // Copying downgrade 404091 (Automatron DLC, Japanese)"
+                CopyFiles "$EXEDIR\404091\*" "$INSTDIR\"
             ${ElseIf} $F4_Language == "en"
-                DetailPrint " // Downloading downgrade 435871 (Automatron DLC, English)"
-                Nsis7z::ExtractWithDetails "$EXEDIR\435871.7z" "Downgrading depot 435871 %s..."
+                DetailPrint " // Copying downgrade 435871 (Automatron DLC, English)"
+                CopyFiles "$EXEDIR\435871\*" "$INSTDIR\"
             ${ElseIf} $F4_Language == "fr"
-                DetailPrint " // Downloading downgrade 435872 (Automatron DLC, French)"
-                Nsis7z::ExtractWithDetails "$EXEDIR\435872.7z" "Downgrading depot 435872 %s..."
+                DetailPrint " // Copying downgrade 435872 (Automatron DLC, French)"
+                CopyFiles "$EXEDIR\435872\*" "$INSTDIR\"
             ${ElseIf} $F4_Language == "de"
-                DetailPrint " // Downloading downgrade 435873 (Automatron DLC, German)"
-                Nsis7z::ExtractWithDetails "$EXEDIR\435873.7z" "Downgrading depot 435873 %s..."
+                DetailPrint " // Copying downgrade 435873 (Automatron DLC, German)"
+                CopyFiles "$EXEDIR\435873\*" "$INSTDIR\"
             ${ElseIf} $F4_Language == "it"
-                DetailPrint " // Downloading downgrade 435874 (Automatron DLC, Italian)"
-                Nsis7z::ExtractWithDetails "$EXEDIR\435874.7z" "Downgrading depot 435874 %s..."
+                DetailPrint " // Copying downgrade 435874 (Automatron DLC, Italian)"
+                CopyFiles "$EXEDIR\435874\*" "$INSTDIR\"
             ${ElseIf} $F4_Language == "es"
-                DetailPrint " // Downloading downgrade 435875 (Automatron DLC, Spanish)"
-                Nsis7z::ExtractWithDetails "$EXEDIR\435875.7z" "Downgrading depot 435875 %s..."
+                DetailPrint " // Copying downgrade 435875 (Automatron DLC, Spanish)"
+                CopyFiles "$EXEDIR\435875\*" "$INSTDIR\"
             ${ElseIf} $F4_Language == "pl"
-                DetailPrint " // Downloading downgrade 435876 (Automatron DLC, Polish)"
-                Nsis7z::ExtractWithDetails "$EXEDIR\435876.7z" "Extracting downgrade 435876 %s..."
+                DetailPrint " // Copying downgrade 435876 (Automatron DLC, Polish)"
+                CopyFiles "$EXEDIR\435876\*" "$INSTDIR\"
             ${ElseIf} $F4_Language == "ru"
-                DetailPrint " // Downloading downgrade 435877 (Automatron DLC, Russian)"
-                Nsis7z::ExtractWithDetails "$EXEDIR\435877.7z" "Extracting downgrade 435877 %s..."
+                DetailPrint " // Copying downgrade 435877 (Automatron DLC, Russian)"
+                CopyFiles "$EXEDIR\435877\*" "$INSTDIR\"
             ${ElseIf} $F4_Language == "ptbr"
-                DetailPrint " // Downloading downgrade 435878 (Automatron DLC, Portuguese-Brazil)"
-                Nsis7z::ExtractWithDetails "$EXEDIR\435878.7z" "Extracting downgrade 435878 %s..."
+                DetailPrint " // Copying downgrade 435878 (Automatron DLC, Portuguese-Brazil)"
+                CopyFiles "$EXEDIR\435878\*" "$INSTDIR\"
             ${ElseIf} $F4_Language == "cn"
-                DetailPrint " // Downloading downgrade 435879 (Automatron DLC, Chinese-Traditional)"
-                Nsis7z::ExtractWithDetails "$EXEDIR\435879.7z" "Extracting downgrade 435879 %s..."
+                DetailPrint " // Copying downgrade 435879 (Automatron DLC, Chinese-Traditional)"
+                CopyFiles "$EXEDIR\435879\*" "$INSTDIR\"
             ${EndIf}
         ${EndIf}
 
         ${If} $DLC_Workshop == "yes"
-            DetailPrint " // Downloading downgrade 435880 (Wasteland Workshop DLC)"
-            Nsis7z::ExtractWithDetails "$EXEDIR\435880.7z" "Extracting downgrade 435880 %s..."
+            DetailPrint " // Copying downgrade 435880 (Wasteland Workshop DLC)"
+            CopyFiles "$EXEDIR\435880\*" "$INSTDIR\"
         ${EndIf}
     SectionEnd
 
