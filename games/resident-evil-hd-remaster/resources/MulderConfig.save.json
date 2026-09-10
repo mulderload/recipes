@@ -2,6 +2,7 @@
   "Resident Evil HD Remaster": {
     "API": "Direct3D 9 (original)",
     "Graphical improvements": [
+      "4K rendering for 3D assets",
       "Real time graphics mod"
     ],
     "Graphical improvements / MSAA Anti-Aliasing": "Off",

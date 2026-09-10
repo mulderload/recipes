@@ -23,7 +23,7 @@ Section
     !insertmacro 7Z_GET
 SectionEnd
 
-Section "Fusion Fix (by ThirteenAG)"
+Section "Fusion Fix (by ThirteenAG) + True 4K (by Arcturium)"
     SetOutPath "$INSTDIR"
 
     # Fusion Fix
@@ -40,6 +40,19 @@ Section "Fusion Fix (by ThirteenAG)"
     !insertmacro DOWNLOAD_1 "https://github.com/ThirteenAG/Ultimate-ASI-Loader/releases/download/Win32-latest/dinput8-Win32.zip" "dinput8-Win32.zip" ""
     !insertmacro NSISUNZ_EXTRACT_ONE "dinput8-Win32.zip" ".\" "dinput8.dll" "AUTO_DELETE"
     AddSize 5272
+
+    # True 4K
+    ${IfNot} ${FileExists} "$INSTDIR\nativePC\arc\_ingamecommon.ori"
+        CopyFiles /SILENT "$INSTDIR\nativePC\arc\ingamecommon.arc" "$INSTDIR\nativePC\arc\_ingamecommon.ori" 597
+    ${EndIf}
+
+    !insertmacro DOWNLOAD_1 "https://www.nexusmods.com/residentevilbiohazardhdremaster/mods/241?tab=files&file_id=501" \
+                            "True4K 241 1 2026-09-03T18-07Z EfItxG11H.zip" \
+                            "7a45236540b00f8200c6a04941425021523d7006"
+
+    !insertmacro NSISUNZ_EXTRACT_ONE "True4K 241 1 2026-09-03T18-07Z EfItxG11H.zip" ".\" "ingamecommon.arc" "AUTO_DELETE"
+    !insertmacro FORCE_RENAME "$INSTDIR\ingamecommon.arc" "$INSTDIR\nativePC\arc\_ingamecommon.mod"
+    AddSize 597
 SectionEnd
 
 SectionGroup "Bug fixes"
@@ -113,24 +126,15 @@ SectionGroup /e "Graphical improvements"
         !insertmacro FOLDER_MERGE "$INSTDIR\Retcon Pack" "$INSTDIR"
     SectionEnd
 
-    Section /o "[Textures] RESCALE (by Arcturium)"
+    Section /o "[Textures] RESCALE 2.0 (by Arcturium)"
         SetOutPath "$INSTDIR"
 
-        !insertmacro DOWNLOAD_1 "https://www.nexusmods.com/residentevilbiohazardhdremaster/mods/102?tab=files&file_id=201" \
-                                "RESCALE Version 1.0-102-1-0-1715439796.zip" \
-                                "54cce42d12991ac72af60628f99c25726c6d037b"
+        !insertmacro DOWNLOAD_1 "https://www.nexusmods.com/residentevilbiohazardhdremaster/mods/102?tab=files&file_id=502" \
+                                "RESCALE 2.0 102 1 2026-09-03T19-00Z VnUwkWuuv.zip" \
+                                "f1803dee15363d0af1b8c36aba38498cfd2b2e9f"
 
-        !insertmacro 7Z_EXTRACT "RESCALE Version 1.0-102-1-0-1715439796.zip" ".\" "AUTO_DELETE" # NSISUNZ doesn't work with archive bigger than 4GB, so we have to use 7z for this one
-        Delete "Installation Instructions.txt"
-
-        !insertmacro DOWNLOAD_1 "https://www.nexusmods.com/residentevilbiohazardhdremaster/mods/102?tab=files&file_id=205" \
-                                "RESCALE V1 - Hotfix 2-102-1-0-1715618408.zip" \
-                                "a13b02c56abb5b447f9f50fa23670fb2fa5cebc0"
-
-        !insertmacro NSISUNZ_EXTRACT "RESCALE V1 - Hotfix 2-102-1-0-1715618408.zip" ".\" "AUTO_DELETE"
-        Delete "Patch Notes.txt"
-
-        #AddSize -230979
+        !insertmacro 7Z_EXTRACT "RESCALE 2.0 102 1 2026-09-03T19-00Z VnUwkWuuv.zip" ".\" "AUTO_DELETE" # NSISUNZ doesn't work with archive bigger than 4GB, so we have to use 7z for this one
+        Delete "README.txt"
     SectionEnd
 
     Section /o "[Videos] RE-Enhance FMVs (by SonicB00M)"
@@ -169,8 +173,8 @@ SectionGroup /e "Graphical improvements"
     Section "East stairs lightning fix (by Kayael or nayef)"
         SetOutPath "$INSTDIR"
 
-        # Check if RESCALE is installed, by looking at a "stable" texture (ie not present in Hotfix 2, not present in a East stairs lighting fix)
-        !insertmacro FILE_HASH_EQUALS "nativePC\arc\scr\st01\r100\r10000.arc" "6379ec9118423634284e7ef617bd27d0150af6ec" $R0
+        # Check if RESCALE is installed, by looking at a "stable" texture (ie present in RESCALE, but not present in a East stairs lighting fix)
+        !insertmacro FILE_HASH_EQUALS "nativePC\arc\scr\st01\r100\r10000.arc" "25f58efa40bff1354decd1ab148cf2fbc982d49e" $R0
         ${If} $R0 == "1"
             DetailPrint " // East stairs lightning fix: RESCALE detected, using nayef's mod"
 

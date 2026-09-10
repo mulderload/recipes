@@ -9,13 +9,14 @@
       "type": "radioGroup",
       "radios": [
         { "value": "Direct3D 9 (original)" },
-        { "value": "Direct3D 11 (dgVoodoo2)", "disabledWhen": [ { "Misc": "ERR09 Crash Fix" } ] }
+        { "value": "Direct3D 11 (dgVoodoo2)" }
       ]
     },
     {
       "name": "Graphical improvements",
       "type": "checkboxGroup",
       "checkboxes": [
+        { "value": "4K rendering for 3D assets" },
         { "value": "Real time graphics mod" },
         { "value": "Remove 120fps cap in \"Variable frame rate\"" }
       ]
@@ -67,6 +68,21 @@
         "operation": "copy",
         "source": "_crashfix.dll",
         "target": "d3d9.dll"
+      },
+
+
+
+      {
+        "when": [ { "Graphical improvements": "4K rendering for 3D assets" } ],
+        "operation": "copy",
+        "source": "nativePC\\arc\\_ingamecommon.mod",
+        "target": "nativePC\\arc\\ingamecommon.arc"
+      },
+      {
+        "when": [ { "!Graphical improvements": "4K rendering for 3D assets" } ],
+        "operation": "copy",
+        "source": "nativePC\\arc\\_ingamecommon.ori",
+        "target": "nativePC\\arc\\ingamecommon.arc"
       },
 
 
